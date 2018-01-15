@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="assets/index.css">
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min1.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css"/>
+    <!-- bootstrap-datetimepicker插件CSS-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <![endif]-->
+    <title>已审核/保障中</title>
+</head>
+<body>
+<nav>
+    <div class="container-fluid" style="margin-top: 10px;padding-left: 0;padding-right: 0;">
+        <ul class="nav nav-tabs">
+            <li><a href="list1.html" target="myFrame">待审核</a></li>
+            <li  id="tabOption"><a href="list2.html" target="myFrame">已审核/保障中</a></li>
+            <li><a href="list3.html" target="myFrame">已拒绝</a></li>
+            <li><a href="list4.html" target="myFrame">已过期</a></li>
+        </ul>
+    </div>
+</nav>
+<div id="toolbar">
+    <div class="my-container">
+        <div class="myText-content">
+            <input type="text" class="form-control searchResult"  style="display: inline-block;width: 200px;margin-top: 25px"
+                   placeholder="请输入投保人姓名" onblur="if(this.placeholder==''){this.placeholder='请输入投保人姓名'}"
+                   onfocus="if(this.placeholder=='请输入投保人姓名'){this.placeholder=''}" > <button type="button"
+                   class="btn btn-default search" id="search" style=";border-bottom-right-radius: 5px;border-top-right-radius: 5px;
+                   color: #fff;border:none;background-color: rgb(22, 132, 194);margin-top: -6px;">
+            <span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+</div>
+<div class="fixed-table-toolbar" style="white-space: nowrap;"><div class="columns columns-right btn-group pull-right">
+    <button class="btn btn-default "  style="color: #fff;background-color: rgb(22, 132, 194);">
+        <a style="color: white" href="http://cjl3.rokyinfo.net:8110/v1.0/orders/excel?status=2"><span class="glyphicon glyphicon-download-alt" id="daochu" style="bottom: 1px;">&nbsp;导出</span></a>
+    </button></div></div>
+<table id="table"
+       data-search="false"
+       data-show-refresh="true"
+       data-show-toggle="false"
+       data-show-export="false"
+       data-minimum-count-columns="2"
+       data-pagination="true"
+       data-id-field="ccuSn"
+       data-page-list="[10, 20, 50, 100, ALL]"
+       data-show-footer="false"
+       data-side-pagination="server"
+       data-url="#"
+       data-cache="true"
+       data-response-handler="responseHandler">
+</table>
+</body>
+<script type="text/javascript">
+    var $table = $('#table');
+    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=2";
+    function initTable() {
+//        $table.bootstrapTable("destroy");
+        $table.bootstrapTable({
+            height:getHeight(),
+            url:url,
+            method: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            striped: false,                              //是否显示行间隔色
+            minimumCountColumns: 2,
+            queryParams:queryParams,
+
+            pagination: true,
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 20,                       //每页的记录行数（*）
+            pageList: [10, 20, 50, 100],        //可供选择的每页的行数（*）
+            responseHandler: responseHandler,
+            columns: [{
+                field: '',
+                title: '',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    /*console.log((dataResult.pageSize * (dataResult.currPage - 1)) + index + 1)*/
+                    return (dataResult.data.pageSize * (dataResult.data.currPage - 1)) + index + 1;
+                }
+            },{
+                field: 'applicant',
+                title: '投保人',
+                align: 'center',
+                valign: 'middle',
+                events: operateEvents,
+                formatter:nameFormatter
+            }, {
+                field: 'phoneNumber',
+                title: '手机号码',
+                align: 'center',
+                valign: 'middle'
+            },{
+                field: 'province',
+                title: '所在省市',
+                align: 'center',
+                valign: 'middle',
+                formatter:addressFormatter
+            },{
+                field: '',
+                title: '投保产品',
+                align: 'center',
+                valign: 'middle',
+                formatter:insuranceFormatter
+
+            },{
+                field: 'createTime',
+                title: '创建时间',
+                align: 'center',
+                valign: 'middle',
+                formatter:createFormatter
+            }]
+
+        });
+        // sometimes footer render error.
+    }
+    function getHeight() {
+        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true) ;
+    }
+    $(window).resize(function () {
+        $table.bootstrapTable('resetView', {
+            height:$(window).height() - 50
+        });
+    });
+    function queryParams(params) {
+        var param = {
+            limit: this.pageSize, // 页面大小
+            page: this.pageNumber
+
+        };
+
+        return param;
+    }
+    function responseHandler(res) {
+        dataResult = res;
+        if (res) {
+            return {
+                "rows": res.data.list,
+                "total": res.data.totalCount
+            };
+        } else {
+            return {
+                "rows": 10,
+                "total": 20
+            };
+        }
+        console.log(res);
+    }
+    function nameFormatter(value,row,index) {
+        return [
+            '<div class="nowwrp">',
+            '<a class="newpage" href="#" title="审核详情">',
+            row.applicant,
+                '</a>',
+            '</div>'
+        ].join("")
+    }
+    function addressFormatter(value,row,index) {
+        if(row.city==null||row.city=="null"){
+            var inner=row.province
+        }
+        else if(row.district==null||row.district=="null"){
+            var inner=row.province+row.city
+        }else {
+            var inner=row.province+row.city+row.district
+        }
+        var color='nowwrp';
+        return [
+            '<span class='+color+'>'+inner+'</span>'
+        ].join('');
+
+    }
+    function insuranceFormatter(value,row,index) {
+
+        var inner=row.insuranceProductEntity.name;
+        var color='nowwrp';
+        return [
+            '<span class='+color+'>'+inner+'</span>'
+        ].join('');
+
+    }
+    function createFormatter(value,row,index) {
+
+        var inner=row.createTime;
+        var color='nowwrp';
+        return [
+            '<span class='+color+'>'+inner+'</span>'
+        ].join('');
+
+    }
+    var operateEvents = {
+        'click .newpage': function (e, value, row, index) {
+            parent.document.getElementById("myFrame").src="check.html";
+            sessionStorage.name2=row.applicant;
+            sessionStorage.idcard2=row.idNumber;
+            sessionStorage.phone2=row.phoneNumber;
+            if(row.city==null||row.city=="null"){
+                var ssq=row.province
+            }
+            else if(row.district==null||row.district=="null"){
+                var ssq=row.province+row.city
+            }else {
+                var ssq=row.province+row.city+row.district
+            }
+            sessionStorage.addres2=ssq;
+            sessionStorage.pinpai2=row.brand;
+            sessionStorage.xinghao2=row.model;
+            sessionStorage.chejia2=row.vin;
+            sessionStorage.jine2=row.buyPrice;
+            sessionStorage.fapiao2=row.billImg;
+            sessionStorage.buytime2=row.buyTime;
+            sessionStorage.carpic12=row.scooterImg[0];
+            sessionStorage.carpic22=row.scooterImg[1];
+            console.log(sessionStorage.carpic1);
+            sessionStorage.xulie2=row.ccuSn;
+            sessionStorage.xianming2=row.insuranceProductEntity.name;
+            sessionStorage.baoe2=row.solutionEntity.desc;
+            sessionStorage.tijiao2=row.insuranceProductEntity.createTime;
+
+            sessionStorage.ID=row.id;
+
+
+
+        }
+    };
+//    $("#daochu").on("click",function () {
+//        http://cjl3.rokyinfo.net:8110/v1.0/orders/excel
+//
+//    });
+
+    $(".search").on("click",function () {
+        console.log("http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=2&applicant="+$(".searchResult").val());
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=2&applicant="+$(".searchResult").val(),
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },
+            success: function (data) {
+                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=2&applicant="+$(".searchResult").val()});
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败");
+                console.log(jqXHR);
+            }
+        });
+
+
+    });
+
+
+    initTable();
+</script>
+</html>
+<script type="text/javascript">
+
+    document.getElementById("tabOption").getElementsByTagName("a")[0].style.backgroundColor="#1684c2";
+    document.getElementById("tabOption").getElementsByTagName("a")[0].style.color="white"
+</script>

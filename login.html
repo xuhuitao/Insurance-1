@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0092)file:///C:/Users/apple/Desktop/%E5%90%8E%E5%8F%B0%E6%A8%A1%E6%9D%BF/mbts_30_Wopop/Wopop.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>登录</title>
+    <link href="css/style_log.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/userpanel.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.ui.all.css">
+    <script src=" https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+
+    <style type="text/css">
+        .form-signin-heading {
+            font-family: Helvetica, Georgia, Arial, sans-serif, 黑体;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: rgba(46, 46, 46, 0.96);
+            text-align: center;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body class="login" mycollectionplug="bind">
+<div class="login_m">
+    <h1 class="form-signin-heading">保险后台管理系统</h1>
+    <div class="login_boder">
+
+        <div class="login_padding" id="login_model">
+
+            <h2>用户名</h2>
+            <label>
+                <input type="text" id="username" class="txt_input txt_input2">
+            </label>
+            <h2>密码</h2>
+            <label>
+                <input type="password" name="textfield2" id="userpwd" class="txt_input" style="
+    margin-bottom: 30px;
+">
+            </label>
+
+
+
+
+
+            <div class="rem_sub">
+                <input type="submit" class="sub_button" name="button2" id="button" value="登录" style="background-color:rgba(46, 46, 46, 0.96);opacity:0.85;width: 310px;padding-top: 1px;">
+                <div class="rem_sub_l">
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--login_padding  Sign up end--></div>
+    <!--login_boder end-->
+</div><!--login_m end-->
+<br> <br>
+
+
+
+</body>
+
+<script type="text/javascript">
+    $(function(){
+        $('#button').click(function(){
+            var username = $('#username').val();
+            var userpswd = $('#userpwd').val();
+
+
+            $.ajax({
+
+                url:'http://cjl3.rokyinfo.net:8110/login',
+                type:'POST',
+
+
+                data: JSON.stringify({
+                    username: username,
+                    password:userpswd
+
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success:function(json){
+                    sessionStorage.token=json.token;
+                    window.location.href="main.html";
+                    top.window.location="main.html";
+
+
+                },
+                error:function(err){
+                    console.log(err);
+                    alert('错误');
+                }
+
+            });
+        });
+
+    });
+</script>
+</html>

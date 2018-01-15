@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="assets/index.css">
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min1.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css"/>
+    <!-- bootstrap-datetimepicker插件CSS-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <![endif]-->
+    <title>warning</title>
+</head>
+<body>
+<div style="height: 99.9vh;overflow-y: scroll;">
+<div><HR style="width: 99%;color: #ccc"  SIZE=1></div>
+<p style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-weight: 600"></p>
+</div>
+
+</body>
+<script type="text/javascript">
+    window.onload = function(){
+
+        setTimeout("publicBusi()",1000);
+    };
+    function publicBusi(){
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=20&sidx=id&order=desc",
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization",sessionStorage.token);
+            },
+            success: function (res) {
+                console.log(res);
+
+
+                for(var i=0;i<res.data.list.length;i++){
+                    mm=res.data.list[i].ccuSn+"&nbsp;"+res.data.list[i].content;
+                    nn=res.data.list[i].alarmTime;
+                    $("p").append(nn+"<br/>");
+                    $("p").append(mm+"<hr>");
+                }
+                console.log(mm)
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败");
+                console.log(jqXHR);
+            }
+        })
+    }
+
+
+
+
+</script>
+</html>

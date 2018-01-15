@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=upXkuuhfOOuQkOlW7yxP0cVHRKIseXmc"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="assets/index.css">
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min1.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css"/>
+    <!-- bootstrap-datetimepicker插件CSS-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <![endif]-->
+    <title>实时监控</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: rgba(40,54,55,0.97)">
+    <div class="">
+        <div class="navbar-header;">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" style="height: 60px;">
+            <div style="height: 60px;">
+                <div class="brand" style="font-size: 26px;color: #fff;padding-left: 0;margin-left: 2%;"><span id="productName">保险后台管理系统</span></div>
+                <ul class="nav pull-right" style="padding-top: 5px;">
+                    <li id="tabActive" style="float: left;"><a style="font-size:16px;text-decoration : none; height: 60px;
+                    margin-top: -5px;padding-top: 18px;padding-right: 25px;" href="pageone.html" target="mainFrame" title="">
+                        <span class="glyphicon glyphicon-globe"> 实时监控</span></a></li>
+                    <li style="float: left;"><a style="font-size:16px;text-decoration : none;height: 60px;
+                    margin-top: -5px;padding-top: 18px;padding-right: 25px;margin-right: 20px;"
+                                                href="pagetwo.html" target="mainFrame" title="">
+                        <span class="glyphicon glyphicon-check"> 保险审核</span></a></li>
+                    <li id="insname" style="float: left;width: 120px;height: 50px;
+                                   margin-right: 10px;text-align: center;padding-top:12px;font-size: 1.4em;
+                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称</li>
+                </ul>
+                <!--<ul id="signout" class="nav pull-right">-->
+
+                <!--<li><a href="login.html" title="退出登录" style="color: #fff;font-size: 14px;margin-top: 4px;">退出</a></li>-->
+                <!--</ul>-->
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</nav>
+    <div id="allmap" style="position:absolute;z-index:0;width: 96%;height: 90%; margin-top:80px; margin-left:2%;
+      box-shadow:0 0 10px rgba(0,0,0,0.2);border-radius: 3px;pointer-events:auto;"></div>
+    <div id="leftcon"  onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
+      background-color: #fff;width:16.5%;cursor:pointer;height: 45px;pointer-events:auto;
+      border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px; margin-left:3%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 185px;">
+        <p style="font-size: 1.3em;margin-top: 8px;-moz-user-select: none;
+         -khtml-user-select: none;user-select: none;white-space: nowrap;">设 备 列 表<span id="leftsp"
+         style="margin-left: 40%;" class="glyphicon glyphicon-chevron-down"></span></p>
+    </div>
+
+    <div id="leftbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
+         width:16.5%;height:78%; margin-left:3%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 185px;">
+
+        <iframe id=leftFrame" name="leftFrame" src="lefttable.html" style="overflow: scroll; height: 100%;" scrolling="auto" frameborder="no" width="100%"></iframe>
+
+    </div>
+    <div style="position:fixed;width:15%;height: 45px;pointer-events:auto;white-space: nowrap;min-width: 158px;">
+        <div id="rightcon" onClick="show2('rightbox','rightcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
+        background-color: #fff;width:10%;cursor:pointer;height: 45px;pointer-events:auto;
+        border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:78%;top: 100px;text-align: center;white-space: nowrap;min-width: 108px;">
+            <p style="font-size: 1.3em;margin-top: 10px;text-align: center;-moz-user-select: none;
+         -khtml-user-select: none;user-select: none;"><span>设 备 详 情</span></p>
+
+        </div>
+
+        <div id="righticon" onclick="ee('rightbox','righticon')" style="box-shadow:0 0 10px rgba(0,0,0,0.36);background-color: #fff;width:45px;
+            cursor:pointer;height: 45px;border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:90%;
+            margin-top: 100px;pointer-events:auto;position: fixed;">
+            <span class="glyphicon glyphicon-bell" style="font-size: 2em;padding-top: 10px;padding-left: 8px;"></span>
+        </div>
+    </div>
+
+
+    <div id="rightbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
+      width:17%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 185px;">
+        <iframe id="rightFrame" name="rightFrame" src="righttable.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
+    </div>
+</body>
+<script type="text/javascript" >
+    var mapData=(function () {
+
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc",
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },
+            success: function (data1) {
+                var data=[]
+                var listdata=data1.data.list
+                $(".map").removeAttr('disabled')
+                $(".map").html("地图")
+                for(var i=0;i<listdata.length;i++){
+                    if(listdata[i]['lon']) {
+                        data.push({'lon':listdata[i]['lon'],'lat':listdata[i]['lat']})}
+                    console.log("成功")
+                }
+                sessionStorage.mapData=JSON.stringify(data)
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+
+                console.log("失败")
+                console.log(jqXHR);
+            }
+        })
+
+
+
+
+
+    })();
+
+    var poins=function (data) {
+        console.log("成功2");
+        if (!data) return;
+        var points=[];
+        var num=parseInt(data.length/10);
+        function  sliceArr(arr,size) {
+            var result=[];
+            for(var i=0;i<Math.ceil(arr.length / size);i++){
+                var start=i*size;
+                var end=(i+1)*size;
+                result.push(arr.slice(start,end))
+            }
+
+            return result
+        }
+        for(var  i=0;i<data.length;i++){
+            points.push(new BMap.Point(data[i]['lon'],data[i]['lat']))
+        }
+        var arr=sliceArr(points,5);
+        return arr
+    };
+
+    function addMarker(point){
+
+        var marker = new BMap.Marker(point);
+        map.addOverlay(marker);
+    }
+
+
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(90.404, 34.915), 6);
+    map.enableScrollWheelZoom();
+    map.enableInertialDragging();
+
+    map.enableContinuousZoom();
+    function ZoomControl(){
+        // 默认停靠位置和偏移量
+        this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
+        this.defaultOffset = new BMap.Size(10, 25);
+    }
+
+    // 通过JavaScript的prototype属性继承于BMap.Control
+    ZoomControl.prototype = new BMap.Control();
+
+    // 创建控件
+    var myZoomCtrl = new ZoomControl();
+    // 添加到地图当中
+    map.addControl(myZoomCtrl);
+    var size = new BMap.Size(50, 25);
+
+    var mapdata=poins(JSON.parse(sessionStorage.mapData));
+    console.log(mapdata);
+    console.log(JSON.parse(sessionStorage.mapData));
+    translateCallback = function (data){
+        if(data.status === 0) {
+            for (var i = 0; i < data.points.length; i++) {
+                map.addOverlay(new BMap.Marker(data.points[i]));
+                map.setCenter(data.points[i]);
+            }
+        }
+    };
+    setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        for(var i=0;i<mapdata.length;i++){
+            convertor.translate(mapdata[i], 1, 5, translateCallback)
+        }
+
+    }, 1000);
+
+
+    /*map.addControl(new BMap.MapTypeControl());   //添加地图类型控件*/
+
+    map.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
+
+    map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT })  ) //左上角标尺
+
+
+    function show(num,a)
+        {
+
+            var div = document.getElementById('leftsp');
+
+            div.className = 'glyphicon glyphicon-chevron-up';
+            var box = document.getElementById(num);
+            var message = document.getElementById(a);
+            if(box.style.display != "block")
+            {
+                box.style.display = "block";
+                var div = document.getElementById('leftsp');
+
+                div.className = 'glyphicon glyphicon-chevron-up';
+
+            }
+            else
+            {
+                box.style.display = "none";
+                var div = document.getElementById('leftsp');
+
+                div.className = 'glyphicon glyphicon-chevron-down';
+            }
+        }
+        function show2(num2,a)
+        {
+            document.getElementById("rightFrame").src="righttable.html"
+
+            var box2 = document.getElementById(num2);
+
+            if(box2.style.display != "block")
+            {
+                box2.style.display = "block";
+
+
+            }
+            else
+            {
+                box2.style.display = "none";
+
+            }
+        }
+        function ee(num3,a) {
+            document.getElementById("rightFrame").src="warning.html"
+            var box2 = document.getElementById(num3);
+
+            if(box2.style.display != "block")
+            {
+                box2.style.display = "block";
+
+
+            }
+            else
+            {
+                box2.style.display = "none";
+
+            }
+        }
+    document.getElementById("tabActive").getElementsByTagName("a")[0].style.color="white";
+    function pointjump() {
+
+//        var point = new BMap.Point(lon1, lat1);
+//        var marker = new BMap.Marker(point);  // 创建标注
+//        map.addOverlay(marker);               // 将标注添加到地图中
+//        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        map.clearOverlays();
+        var x = lon1;
+        var y = lat1;
+        var ggPoint = new BMap.Point(x,y);
+
+        //地图初始化
+        var bm = new BMap.Map("allmap");
+        bm.centerAndZoom(ggPoint, 18);
+        bm.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
+        //添加gps marker和label
+
+        //坐标转换完之后的回调函数
+        translateCallback = function (data){
+            if(data.status === 0) {
+                var marker = new BMap.Marker(data.points[0]);
+                bm.addOverlay(marker);
+                marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+                bm.setCenter(data.points[0]);
+            }
+        }
+
+        setTimeout(function(){
+            var convertor = new BMap.Convertor();
+            var pointArr = [];
+            pointArr.push(ggPoint);
+            convertor.translate(pointArr, 1, 5, translateCallback)
+        }, 1);
+
+
+
+
+    }
+    window.onload = function(e, value, row, index){
+
+
+
+
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/users/detail",
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },success:function (json) {
+                console.log("成功");
+                console.log(json);
+                document.getElementById("insname").innerHTML = JSON.stringify(json.data.nickname);
+                console.log(JSON.stringify(json.data.nickname))
+
+
+
+
+            },
+            error:function (err) {
+                console.log(err)
+            }})
+    }
+
+
+</script>
+</html>

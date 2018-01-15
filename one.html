@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="assets/index.css">
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min1.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css"/>
+    <!-- bootstrap-datetimepicker插件CSS-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=upXkuuhfOOuQkOlW7yxP0cVHRKIseXmc"></script>
+    <![endif]-->
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <title>实时监控</title>
+</head>
+<body>
+<div id="allmap" style="position:absolute;z-index:0;width: 96%;height: 90%; margin-top:80px; margin-left:2%;
+box-shadow:0 0 10px rgba(0,0,0,0.2);border-radius: 3px;pointer-events:auto;"></div>
+<div id="leftcon" onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
+background-color: #fff;width:320px;cursor:pointer;height: 45px;pointer-events:auto;
+border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px; margin-left:3%;margin-top:100px;">
+<p style="margin-left: 110px;font-size: 18px;margin-top: 10px;-moz-user-select: none;
+ -khtml-user-select: none;user-select: none;">设 备 列 表<span id="leftsp"
+style="margin-left: 80px;" class="glyphicon glyphicon-chevron-down"></span></p>
+</div>
+
+<div id="leftbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
+width:320px;height:78%; margin-left:3%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;">
+<div class="one" style="text-align: center;">
+<input type="text" class="form-control searchResult"  style="display: inline-block;width: 200px;margin-top: 15px;"
+placeholder="请输入设备SN号" onblur="if(this.placeholder==''){this.placeholder='请输入设备SN号'}"
+onfocus="if(this.placeholder=='请输入设备SN号'){this.placeholder=''}" > <button type="button"
+class="btn btn-default searchCcu" style=";border-bottom-right-radius: 5px;border-top-right-radius: 5px;color: #fff;border:none;background-color: rgb(22, 132, 194);">
+<span class="glyphicon glyphicon-search"></span></button>
+</div>
+
+</div>
+
+
+
+<div id="rightcon" onClick="show2('rightbox','rightcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
+background-color: #fff;width:200px;cursor:pointer;height: 45px;pointer-events:auto;
+border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:78%;top: 100px;"><p style="font-size: 18px;margin-top: 10px;text-align: center;">B000000000</p>
+</div>
+
+<div id="rightbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
+width:320px;height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;">
+</div>
+
+
+<!--<div id="righticon" onClick="show3('rightbox2','righticon')" style="box-shadow: -2px 5px 5px #888888;-->
+<!--background-color: #fff;width:45px;cursor:pointer;height: 45px;-->
+<!--border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:1000px;margin-top: 100px;"><span class="glyphicon glyphicon-bell"></span>-->
+
+
+
+<!--</div>-->
+
+</body>
+<script type="text/javascript">
+
+        var $table = $('#table');
+        //    var  url ="http://manager.rokyinfo.com:9777/v1/firmware";
+        function initTable() {
+    //        $table.bootstrapTable("destroy");
+            $table.bootstrapTable({
+    //            height:getHeight(),
+    //            url:url,
+                method: 'GET',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                striped: false,                              //是否显示行间隔色
+                minimumCountColumns: 2,
+    //            queryParams:queryParams,
+
+                pagination: true,
+                pageNumber: 1,                       //初始化加载第一页，默认第一页
+                pageSize: 20,                       //每页的记录行数（*）
+                pageList: [10, 20, 50, 100],        //可供选择的每页的行数（*）
+    //            responseHandler: responseHandler,
+                columns: [{
+                    field: 'id',
+                    title: '创建时间',
+                    align: 'center',
+                    valign: 'middle'
+                }],
+                data: [{
+                    id: "B00000000"
+
+                }, {
+                    id:"B00000001"
+
+                }]
+
+            });
+            // sometimes footer render error.
+        }
+
+        initTable();
+    function show(num,a)
+        {
+            var div = document.getElementById('leftsp');
+
+            div.className = 'glyphicon glyphicon-chevron-up';
+            var box = document.getElementById(num);
+            var message = document.getElementById(a);
+            if(box.style.display != "block")
+            {
+                box.style.display = "block";
+                var div = document.getElementById('leftsp');
+
+                div.className = 'glyphicon glyphicon-chevron-up';
+
+            }
+            else
+            {
+                box.style.display = "none";
+                var div = document.getElementById('leftsp');
+
+                div.className = 'glyphicon glyphicon-chevron-down';
+            }
+        }
+        function show2(num2,a)
+        {
+
+            var box2 = document.getElementById(num2);
+
+            if(box2.style.display != "block")
+            {
+                box2.style.display = "block";
+
+
+            }
+            else
+            {
+                box2.style.display = "none";
+
+            }
+        }
+</script>
+</html>

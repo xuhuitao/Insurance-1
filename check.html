@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=upXkuuhfOOuQkOlW7yxP0cVHRKIseXmc"></script>
+    <!-- Latest compiled and minified CSS -->
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <![endif]-->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <link rel="stylesheet" href="css/buttons.css">
+
+    <title>审核详情</title>
+</head>
+<style>
+    .title3{
+        padding-left: 30px;
+        font-size: 17px;
+        font-family: "微软雅黑 Light";
+    }
+    .information{
+        margin-left: 30px;
+        width: 75%;
+        height: 90%;
+    }
+    .bottom{
+        text-align: center;
+
+    }
+    span{
+        float: right;
+        color: black;
+    }
+    .information2{
+        margin-left: 10%;
+        width: 80%;
+        height: 75%;
+    }
+
+
+</style>
+<body>
+<div id="wrap1" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+
+    <div style="width: 520px;height: 600px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+        <div class="title3" style="text-align: center;padding-top: 8px;padding-left: 0px">
+            <h3>设备信息</h3>
+        </div>
+        <div class="information2">
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">设备SN号<span  id="shebeisn"></span></p>
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">设备状态<span  id="shebeist"></span></p>
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">经纬度<span  id="lonlat"></span></p>
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">位置<span  id="Address2"></span></p>
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">上报时间<span  id="Report"></span></p>
+            <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">服务到期日<span  id="duedate"></span></p>
+
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
+            line-height: 28px;padding: 0 30px;text-align: center;" onclick="cc()">关闭</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="wrap2" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+
+    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+
+        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
+            <img  id="carpic3" src="#" style="width: 98%;height:98%;"></img>
+
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
+            line-height: 28px;padding: 0 30px;text-align: center;" onclick="gg()">关闭</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="wrap3" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+
+    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+
+        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
+            <img  id="carpic4" src="#" style="width: 98%;height:98%;"></img>
+
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
+            line-height: 28px;padding: 0 30px;text-align: center;" onclick="ii()">关闭</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="wrap4" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+
+    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+
+        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
+            <img  id="invoice2" src="#" style="width: 98%;height:98%;"></img>
+
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
+            line-height: 28px;padding: 0 30px;text-align: center;" onclick="kk()">关闭</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="top" style="width: 100%;height:40px;">
+    <p style="padding-left: 30px;">订单详情/<span id="people1" style="float: none;color:rgba(0,0,0,0.51); ">
+        张三</span></p><img src="img/prohibited-denied_318-27634.jpg" style="width: 20px;height: 20px;float: right;margin-top: -35px;" onclick="dd()">
+
+</div>
+<div style="height: 80vh;">
+<div class="left" style="width: 33.2%;float:left;height: 100%;">
+    <div class="title3">
+        <h3>用户信息</h3>
+    </div>
+    <div class="information">
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">投保人<span  id="people2">张三</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">身份证<span  id="idnum">370000000000000</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">手机号码<span  id="phone">1310000000</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">所在省市<span  id="address">江苏省无锡市</span></p>
+    </div>
+</div>
+
+<div class="center" style="width: 33.2%;float:left;height: 80vh;">
+    <div class="title3">
+        <h3>车辆信息</h3>
+    </div>
+    <div class="information" style="white-space: nowrap;">
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51);white-space: nowrap;">车辆品牌<span  id="carpinpai">张三</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">车辆型号<span  id="carxinghao">米酷max</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">车架号<span  id="chejia">0000000000</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">购车金额<span  id="money">5000</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51);height: 40px;">购车发票<img  id="invoice" src="#" style="float: right;width: 60px;height: 40px;" onclick="jj()"></img></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">购车日期<span  id="buydate">2018.1.9</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51);height: 40px;">车辆图片
+            <img  id="carpic2" src="#" style="float: right;width: 60px;height: 40px;" onclick="ee()"></img>
+            <img  id="carpic1" src="#" style="float: right;width: 60px;height: 40px;margin-right: 10px;" onclick="hh()"></img></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">绑定设备<span id="carsn" style="color: #0c86e0;cursor:pointer;" onclick="tt();">B000000000</span></p>
+        <!--<button type="button" class="button button-glow button-rounded button-highlight" style="margin-top: 50px;margin-left:10%;">通过</button>-->
+        <!--<button type="button" style="margin-left: 40px;" class="button button-glow button-rounded button-caution">拒绝</button>-->
+    </div>
+</div>
+
+<div class="right" style="width: 33.2%;float:left;height: 80vh;">
+    <div class="title3">
+        <h3>投保信息</h3>
+    </div>
+    <div class="information">
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">产品名称<span  id="insname">盗抢险</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">保险金额<span  id="insmoney">3500</span></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">提交时间<span  id="update">2018.1.9</span></p>
+
+    </div>
+</div>
+</div>
+<div class="bottom" style="margin-top: 30px; position: static;">
+    <button type="button" id="pass" class="button button-glow button-rounded button-highlight">通过</button>
+    <button type="button" id="refuse" style="margin-left: 40px;" class="button button-glow button-rounded button-caution">拒绝</button>
+</div>
+</body>
+
+<script type="text/javascript">
+    window.onload = function(){
+        console.log(sessionStorage.name2);
+
+        document.getElementById("people1").innerHTML=sessionStorage.name2;
+        document.getElementById("people2").innerHTML=sessionStorage.name2;
+        document.getElementById("idnum").innerHTML=sessionStorage.idcard2;
+        document.getElementById("phone").innerHTML=sessionStorage.phone2;
+        document.getElementById("address").innerHTML=sessionStorage.addres2;
+        document.getElementById("carpinpai").innerHTML=sessionStorage.pinpai2;
+        document.getElementById("carxinghao").innerHTML=sessionStorage.xinghao2;
+        document.getElementById("chejia").innerHTML=sessionStorage.chejia2;
+        document.getElementById("money").innerHTML=sessionStorage.jine2;
+        document.getElementById("invoice").src=sessionStorage.fapiao2;
+        document.getElementById("invoice2").src=sessionStorage.fapiao2;
+
+
+        document.getElementById("buydate").innerHTML=sessionStorage.buytime2;
+
+        document.getElementById("carpic1").src=sessionStorage.carpic12;
+        document.getElementById("carpic2").src=sessionStorage.carpic22;
+        document.getElementById("carpic3").src=sessionStorage.carpic22;
+        document.getElementById("carpic4").src=sessionStorage.carpic12;
+        document.getElementById("carsn").innerHTML=sessionStorage.xulie2;
+        document.getElementById("insname").innerHTML=sessionStorage.xianming2;
+        document.getElementById("insmoney").innerHTML=sessionStorage.baoe2;
+        document.getElementById("update").innerHTML=sessionStorage.tijiao2;
+
+
+    };
+
+    function tt(res) {
+
+//        document.getElementById("shebeist").innerHTML=sessionStorage.shebeist;
+//        document.getElementById("lonlat").innerHTML=sessionStorage.lonlat;
+//        document.getElementById("Address2").innerHTML=sessionStorage.Address2;
+//        document.getElementById("Report").innerHTML=sessionStorage.Report;
+//        document.getElementById("duedate").innerHTML=sessionStorage.duedate;
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+sessionStorage.xulie2,
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },
+            success:function (res) {
+                console.log("成功");
+                document.getElementById("shebeisn").innerHTML=res.data.list[0].ccuSn;
+                var q;
+                if(res.data.list[0].status==0){
+                    q="设防"
+                }
+                else if(res.data.list[0].status==1){
+                    q="撤防"
+                }
+                else if(res.data.list[0].status==2){
+                    q="P档"
+                }
+                else if(res.data.list[0].status==3){
+                    q="骑行"
+                }
+                document.getElementById("shebeist").innerHTML=q;
+                document.getElementById("lonlat").innerHTML=res.data.list[0].lon+","+res.data.list[0].lat;
+                var geoc = new BMap.Geocoder();
+                var lng = res.data.list[0].lon;
+                var lat = res.data.list[0].lat;
+
+                var point = new BMap.Point(lng, lat);
+
+                geoc.getLocation(point, function (rs) {
+                    var addComp = rs.addressComponents;
+                    document.getElementById("Address2").innerHTML = addComp.province + addComp.city + addComp.district + addComp.street+ addComp.streetNumber;
+                });
+                document.getElementById("Report").innerHTML=res.data.list[0].reportTime;
+                document.getElementById("duedate").innerHTML=res.data.list[0].simValidityTime;
+            },
+            error:function (err) {
+                console.log(err)
+            }});
+
+
+        $("#wrap1").show()
+
+    }
+    function cc() {
+        $("#wrap1").hide()
+
+    }
+    function dd() {
+        window.history.back(-1);
+
+    }
+    function ee() {
+        $("#wrap2").show()
+
+    }
+    function gg() {
+        $("#wrap2").hide()
+
+    }
+    function hh() {
+        $("#wrap3").show()
+
+    }
+    function ii() {
+        $("#wrap3").hide()
+
+    }
+    function jj() {
+        $("#wrap4").show()
+
+    }
+    function kk() {
+        $("#wrap4").hide()
+
+    }
+    $("#pass").on("click",function () {
+        console.log("http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=1")
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=1",
+            method: "put",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },success:function (data) {
+                console.log("成功");
+                alert("订单审核通过")
+            },
+            error:function (err) {
+                console.log(err)
+            }})
+    });
+
+    $("#refuse").on("click",function () {
+        console.log("http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=0")
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=1",
+            method: "put",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },success:function (data) {
+                console.log("成功");
+                alert("您拒绝了订单请求")
+            },
+            error:function (err) {
+                console.log(err)
+            }})
+    });
+
+
+</script>
+</html>

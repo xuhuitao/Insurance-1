@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+body{  font-family: "Microsoft YaHei","微软雅黑 Light","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif; font-size:13px;}
+.like{
+    width: 20%;
+    height: 30%;
+}
+.smallImg{
+    width: 30px;
+    height: 30px;
+}
+.red{
+    color: #FF0000
+}
+.green{
+    color:#20d44a
+}
+.yellow{
+    color:#FF9200
+}
+.orange{
+    color:#FF7100}
+.nowwrp1{
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    width:90px;
+
+}
+.nowwrp{
+    white-space: nowrap;
+
+
+}
+.wrap-btn{
+    background: red;
+
+}
+.nav>li>a{
+    color:#999;
+    font-size:16px;
+    font-weight:400;}
+.nav>li>a:hover{
+
+    background:none;
+}
+.nav>li>a:focus{
+    color:#FFF;
+    background:none;
+}
+.navbar .brand {
+    padding: 5px 20px 6px;
+    font-family: 'Telex',sans-serif;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+    font-weight: 200;
+    padding-top: 10px;
+}
+.navbar .brand {
+    display: block;
+    float: left;
+
+    margin-left: -20px;
+
+
+    color: #fff;
+    text-shadow: 0 1px 0 #54b4eb;
+    font-family: Helvetica, Georgia, Arial, sans-serif, 黑体;
+    font-size: 26px;
+    padding-left: 33px;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #2fa4e7;
+    font-size: 18px;
+}
+.nav{
+    -ms-overflow-y:scroll;}
+
+.nav-pills{
+    -ms-overflow-y:scroll;}
+.nav-stacked{
+    -ms-overflow-y:scroll;}
+.nav nav-pills nav-stacked{
+    -ms-overflow-y:scroll;}
+
+.my-container {
+    float: left;
+    display: inline-block;
+    margin-right:30px;
+    margin-top: -15px;
+}
+
+.myLabel-content ,.myText-content,.myBtn-content{
+    float: left;
+    display: inline-block;
+
+}
+.myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+    height: 34px;
+
+}
+.myBtn-content .btn {
+    margin-bottom: 10px;
+}
+.btn-default {
+    margin-top: -6px;
+
+}
+#left, #right, #openClose {
+    float: left;
+}
+.nav>li>a:focus {
+    color: #FFF;
+    background: #1684c2;
+}
+nav>li:active{
+    color: #FFF;
+    background: #1684c2;
+}

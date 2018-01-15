@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="assets/index.css">
+    <!--    <script src="assets/index.js"></script>
+        <script src="assets/ga.js"></script>-->
+    <script src="js/vue1.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min1.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.css"/>
+    <!-- bootstrap-datetimepicker插件CSS-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap-table.min.js"></script>
+
+    <!-- Latest compiled and minified Locales -->
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <![endif]-->
+    <title>设备列表</title>
+    <style>
+        *{
+            border-right: 0 solid transparent !important;
+            border-left: 0 solid transparent !important;
+        }
+
+        table{
+            /*white-space:nowrap;*/
+            /*overflow: hidden;*/
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+
+
+        }
+        tr{
+            height: 55px;
+        }
+        td{
+            height: 0px;
+        }
+        .fixed-table-header{
+            height: 40px;
+
+        }
+        .fixed-table-pagination .pagination-info {
+            line-height: 34px;
+            margin-right: 5px;
+            margin-left: 20px;
+            text-align: center;
+        }
+        .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
+            padding: 8px;
+            line-height: 24px;
+            vertical-align: top;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="one" style="text-align: center;white-space: nowrap;margin-bottom: 20px;">
+    <input type="text" class="form-control searchResult"  style="display: inline-block;width: 72%;margin-top: 15px;
+    border: 0.5px solid #ccc !important;"
+           placeholder="请输入设备SN号" onblur="if(this.placeholder==''){this.placeholder='请输入设备SN号'}"
+           onfocus="if(this.placeholder=='请输入设备SN号'){this.placeholder=''}" > <button type="button"
+           class="btn btn-default search" style=";border-bottom-right-radius: 5px;border-top-right-radius: 5px;
+           color: #fff;border:none;background-color: rgb(22, 132, 194);margin-top: -6px;">
+    <span class="glyphicon glyphicon-search"></span></button>
+</div>
+<table id="table"
+       data-search="false"
+       data-show-toggle="false"
+       data-show-export="false"
+       data-minimum-count-columns="2"
+       data-pagination="true"
+       data-id-field="ccuSn"
+       data-page-list="[10, 20, 50, 100, ALL]"
+       data-show-footer="false"
+       data-side-pagination="server"
+       data-url="#"
+       data-cache="true"
+       data-response-handler="responseHandler">
+</table>
+</body>
+<script type="text/javascript">
+    var $table = $('#table');
+    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc";
+    function initTable() {
+//        $table.bootstrapTable("destroy");
+        $table.bootstrapTable({
+            height:950,
+            url:url,
+            method: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            striped: false,                              //是否显示行间隔色
+            minimumCountColumns: 2,
+            ajaxOptions: {
+                headers: {
+                    "Authorization":sessionStorage.token
+                }
+            },
+            queryParams:queryParams,
+
+            pagination: true,
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 20,                       //每页的记录行数（*）
+            pageList: [10, 20, 50, 100],        //可供选择的每页的行数（*）
+            responseHandler: responseHandler,
+            columns: [{
+                field: 'id',
+                title: 'SN号',
+                align: 'center',
+                valign: 'middle',
+                events: operateEvents,
+                formatter:idFormatter
+            }]
+
+        });
+        // sometimes footer render error.
+    }
+    function queryParams(params) {
+        var param = {
+            limit: this.pageSize, // 页面大小
+            page: this.pageNumber
+
+        };
+
+        return param;
+    }
+    function responseHandler(res) {
+        dataResult = res;
+        if (res) {
+            return {
+                "rows": res.data.list,
+                "total": res.data.totalCount
+            };
+        } else {
+            return {
+                "rows": 10,
+                "total": 20
+            };
+        }
+        console.log(res);
+    }
+    var operateEvents = {
+        'click .SSN': function (e, value, row, index) {
+
+            window.parent.lon1 = row.lon;
+            window.parent.lat1 = row.lat;
+            window.parent.pointjump()
+            sessionStorage.jingdu = row.lon;
+            sessionStorage.weidu = row.lat;
+            sessionStorage.shangbao = row.reportTime;
+            sessionStorage.chezai = row.bmsSoh-100;
+            var v;
+            if(row.dcuVbat==0){
+                v="0"
+            }
+            else if(row.dcuVbat==3){
+                v="33%"
+            }
+            else if(row.dcuVbat==6){
+                v="66%"
+            }
+            else if(row.dcuVbat==9){
+                v="99%"
+            }
+            sessionStorage.neizhi = v;
+            sessionStorage.jizhan = row.dcuGsmRssi;
+            sessionStorage.weixing = row.dcuGpsRssi;
+            sessionStorage.weizhi = row.lon+row.lat;
+            var q;
+            if(row.status==0){
+               q="设防"
+            }
+            else if(row.status==1){
+                q="撤防"
+            }
+            else if(row.status==2){
+                q="P档"
+            }
+            else if(row.status==3){
+                q="骑行"
+            }
+            sessionStorage.zhuangtai=q;
+
+            $.ajax({
+                url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+row.ccuSn,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                beforeSend: function (xhr) {
+                    /* Authorization header */
+                    xhr.setRequestHeader("Authorization", sessionStorage.token);
+                },
+
+                success: function (res) {
+                    console.log(res);
+                    sessionStorage.Sn=res.data.list[0].ccuSn;
+                    console.log(sessionStorage.Sn);
+
+
+                    sessionStorage.riqi1=res.data.list[0].buyTime;
+                    sessionStorage.pinpai=res.data.list[0].brand;
+                    sessionStorage.xinghao=res.data.list[0].model;
+                    sessionStorage.chejia=res.data.list[0].vin;
+                    sessionStorage.jinee=res.data.list[0].buyPrice;
+                    sessionStorage.invoice=res.data.list[0].billImg;
+                    if(res.data.list[0].city==null||res.data.list[0].city=="null"){
+                        var ssq2=res.data.list[0].province
+                    }
+                    else if(res.data.list[0].district==null||res.data.list[0].district=="null"){
+                        var ssq2=res.data.list[0].province+res.data.list[0].city
+                    }else {
+                        var ssq2=res.data.list[0].province+res.data.list[0].city+res.data.list[0].district
+                    }
+                    sessionStorage.shengshi=ssq2;
+                    sessionStorage.carpic2=res.data.list[0].scooterImg[1];
+                    sessionStorage.carpic1=res.data.list[0].scooterImg[0];
+                    sessionStorage.xingming=res.data.list[0].applicant;
+                    sessionStorage.shenfen=res.data.list[0].idNumber;
+                    sessionStorage.shouji=res.data.list[0].phoneNumber;
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("失败")
+                    console.log(jqXHR);
+                }
+            });
+            $.ajax({
+                url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+row.ccuSn,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                beforeSend: function (xhr) {
+                    /* Authorization header */
+                    xhr.setRequestHeader("Authorization", sessionStorage.token);
+                },
+
+                success: function (res) {
+                    console.log(res);
+                    sessionStorage.daoqi=res.data.list[0].simValidityTime;
+                    console.log(sessionStorage.daoqi);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("失败")
+                    console.log(jqXHR);
+                }
+            });
+
+
+
+            window.parent.rightFrame.location.reload();
+
+        }
+    };
+    initTable();
+    function idFormatter(value,row,index) {
+        var inner=row.ccuSn;
+        return [
+            '<a class="SSN">'+inner+'</a>'+'&nbsp;'
+        ].join('');
+    }
+    $(".search").on("click",function () {
+
+            var url="http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()
+
+        $.ajax({
+            url: url,
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("firm", sessionStorage.flag);
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },
+            success: function (res) {
+                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()});
+                console.log(res.data.list[0].lon)
+                console.log(res.data.list[0].lat)
+                window.parent.lon1 = res.data.list[0].lon;
+                window.parent.lat1 = res.data.list[0].lat;
+                window.parent.pointjump()
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败")
+                console.log(jqXHR);
+            }
+        });
+
+
+    })
+
+
+    </script>
+</html>
