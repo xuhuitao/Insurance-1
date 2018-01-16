@@ -47,6 +47,9 @@
         width: 80%;
         height: 75%;
     }
+    p{
+        font-size:1em;
+    }
 
 
 </style>
@@ -74,15 +77,15 @@
     </div>
 </div>
 
-<div id="wrap2" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+<div id="wrap2" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 40px;left:0px;">
 
-    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+    <div style="width: 80%;height: 80%;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
 
-        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
-            <img  id="carpic3" src="#" style="width: 98%;height:98%;"></img>
+        <div class="picdiv" style="width: auto;height: 90%;text-align: center;">
+            <img  id="carpic3" src="#" style="width: auto;height:100%;margin-top: 8px;"></img>
 
         </div>
-        <div style="text-align: center;">
+        <div style="text-align: center;padding-bottom: 20px;margin-top: 10px;">
             <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
             line-height: 28px;padding: 0 30px;text-align: center;" onclick="gg()">关闭</button>
         </div>
@@ -90,15 +93,15 @@
     </div>
 </div>
 
-<div id="wrap3" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+<div id="wrap3" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 40px;left:0px;">
 
-    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+    <div style="width: 80%;height:80%;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
 
-        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
-            <img  id="carpic4" src="#" style="width: 98%;height:98%;"></img>
+        <div class="picdiv" style="width: auto;height: 90%;text-align: center;">
+            <img  id="carpic4" src="#" style="width: auto;height:100%;margin-top: 8px;"></img>
 
         </div>
-        <div style="text-align: center;">
+        <div style="text-align: center;padding-bottom: 20px;margin-top: 10px;">
             <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
             line-height: 28px;padding: 0 30px;text-align: center;" onclick="ii()">关闭</button>
         </div>
@@ -106,15 +109,15 @@
     </div>
 </div>
 
-<div id="wrap4" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 100px;left:0px;">
+<div id="wrap4" style="position: fixed; top: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: none;z-index:909;margin: 0 auto;margin-top: 40px;left:0px;">
 
-    <div style="width: 650px;height: 500px;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+    <div style="width:80%;height: 80%;background: #FFF;margin: 0 auto;opacity: 1;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
 
-        <div class="picdiv" style="width: 100%;height: 90%;text-align: center;">
-            <img  id="invoice2" src="#" style="width: 98%;height:98%;"></img>
+        <div class="picdiv" style="width: auto;height: 90%;text-align: center">
+            <img  id="invoice2" src="#" style="width: auto;height:100%;margin-top: 8px;"></img>
 
         </div>
-        <div style="text-align: center;">
+        <div style="text-align: center;padding-bottom: 20px;margin-top: 10px;">
             <button type="button" class="button button-primary button-rounded button-small close" style="font-size: 16px;height: 34px;
             line-height: 28px;padding: 0 30px;text-align: center;" onclick="kk()">关闭</button>
         </div>
@@ -172,7 +175,7 @@
     </div>
 </div>
 </div>
-<div class="bottom" style="margin-top: 30px; position: static;">
+<div class="bottom" style="margin-top: 30px; position:fixed;height:50px;width: 100%; ">
     <button type="button" id="pass" class="button button-glow button-rounded button-highlight">通过</button>
     <button type="button" id="refuse" style="margin-left: 40px;" class="button button-glow button-rounded button-caution">拒绝</button>
 </div>
@@ -318,7 +321,7 @@
     $("#refuse").on("click",function () {
         console.log("http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=0")
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=1",
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/"+sessionStorage.ID+"?dispose=0",
             method: "put",
             contentType: "application/json; charset=utf-8",
             cache: false,

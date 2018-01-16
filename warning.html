@@ -40,19 +40,55 @@
 
     <![endif]-->
     <title>warning</title>
+    <style>
+        .cont::-webkit-scrollbar {
+            display: none;
+        }
+        .alarm{
+            background: url("img/timg.jpg");
+        }
+    </style>
 </head>
 <body>
-<div style="height: 99.9vh;overflow-y: scroll;">
+<div class="cont" style="height: 99.9vh;overflow-y: scroll;">
 <div><HR style="width: 99%;color: #ccc"  SIZE=1></div>
-<p style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-weight: 600"></p>
+<p style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1em;"></span></p>
 </div>
 
 </body>
 <script type="text/javascript">
     window.onload = function(){
 
-        setTimeout("publicBusi()",1000);
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=20&sidx=id&order=desc",
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization",sessionStorage.token);
+            },
+            success: function (res) {
+
+
+                for(var i=0;i<res.data.list.length;i++){
+                    mm=res.data.list[i].ccuSn+"&nbsp;&nbsp;"+res.data.list[i].content;
+                    nn=res.data.list[i].alarmTime;
+                    $("p").append("<span class='glyphicon glyphicon-volume-up' style='color: red'></span>"+nn+"<br/>");
+                    $("p").append(mm+"<hr>");
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败");
+                console.log(jqXHR);
+            }
+        })
+
+        setInterval("publicBusi()",10000);
+
     };
+
     function publicBusi(){
         $.ajax({
             url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=20&sidx=id&order=desc",
@@ -64,16 +100,16 @@
                 xhr.setRequestHeader("Authorization",sessionStorage.token);
             },
             success: function (res) {
-                console.log(res);
 
-
+                $('#pId').html('')
                 for(var i=0;i<res.data.list.length;i++){
-                    mm=res.data.list[i].ccuSn+"&nbsp;"+res.data.list[i].content;
+                    mm=res.data.list[i].ccuSn+"&nbsp;&nbsp;"+res.data.list[i].content;
                     nn=res.data.list[i].alarmTime;
-                    $("p").append(nn+"<br/>");
+
+
+                    $("p").append("<span class='glyphicon glyphicon-volume-up' style='color: red'></span>"+nn+"<br/>");
                     $("p").append(mm+"<hr>");
                 }
-                console.log(mm)
 
             },
             error: function (jqXHR, textStatus, errorThrown) {

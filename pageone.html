@@ -40,6 +40,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
     <![endif]-->
     <title>实时监控</title>
+
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: rgba(40,54,55,0.97)">
@@ -81,14 +82,14 @@
       box-shadow:0 0 10px rgba(0,0,0,0.2);border-radius: 3px;pointer-events:auto;"></div>
     <div id="leftcon"  onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
       background-color: #fff;width:16.5%;cursor:pointer;height: 45px;pointer-events:auto;
-      border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px; margin-left:3%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 185px;">
-        <p style="font-size: 1.3em;margin-top: 8px;-moz-user-select: none;
+      border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px; margin-left:3%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 246px;">
+        <p id="rightp" style="font-size: 1.3em;margin-top: 8px;-moz-user-select: none;
          -khtml-user-select: none;user-select: none;white-space: nowrap;">设 备 列 表<span id="leftsp"
          style="margin-left: 40%;" class="glyphicon glyphicon-chevron-down"></span></p>
     </div>
 
     <div id="leftbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
-         width:16.5%;height:78%; margin-left:3%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 185px;">
+         width:16.5%;height:78%; margin-left:3%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 246px;">
 
         <iframe id=leftFrame" name="leftFrame" src="lefttable.html" style="overflow: scroll; height: 100%;" scrolling="auto" frameborder="no" width="100%"></iframe>
 
@@ -111,82 +112,81 @@
 
 
     <div id="rightbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
-      width:17%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 185px;">
-        <iframe id="rightFrame" name="rightFrame" src="righttable.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
+      width:17.5%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);pointer-events:auto;min-width: 200px;">
+        <iframe id="rightFrame" name="rightFrame" src="warning.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
     </div>
 </body>
 <script type="text/javascript" >
-    var mapData=(function () {
-
-        $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc",
-            method: "get",
-            contentType: "application/json; charset=utf-8",
-            async: false,
-            cache: false,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", sessionStorage.token);
-            },
-            success: function (data1) {
-                var data=[]
-                var listdata=data1.data.list
-                $(".map").removeAttr('disabled')
-                $(".map").html("地图")
-                for(var i=0;i<listdata.length;i++){
-                    if(listdata[i]['lon']) {
-                        data.push({'lon':listdata[i]['lon'],'lat':listdata[i]['lat']})}
-                    console.log("成功")
-                }
-                sessionStorage.mapData=JSON.stringify(data)
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-                console.log("失败")
-                console.log(jqXHR);
-            }
-        })
-
-
-
-
-
-    })();
-
-    var poins=function (data) {
-        console.log("成功2");
-        if (!data) return;
-        var points=[];
-        var num=parseInt(data.length/10);
-        function  sliceArr(arr,size) {
-            var result=[];
-            for(var i=0;i<Math.ceil(arr.length / size);i++){
-                var start=i*size;
-                var end=(i+1)*size;
-                result.push(arr.slice(start,end))
-            }
-
-            return result
-        }
-        for(var  i=0;i<data.length;i++){
-            points.push(new BMap.Point(data[i]['lon'],data[i]['lat']))
-        }
-        var arr=sliceArr(points,5);
-        return arr
-    };
-
-    function addMarker(point){
-
-        var marker = new BMap.Marker(point);
-        map.addOverlay(marker);
-    }
+//    var mapData=(function () {
+//
+//        $.ajax({
+//            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc",
+//            method: "get",
+//            contentType: "application/json; charset=utf-8",
+//            async: false,
+//            cache: false,
+//            beforeSend: function (xhr) {
+//                xhr.setRequestHeader("Authorization", sessionStorage.token);
+//            },
+//            success: function (data1) {
+//                var data=[]
+//                var listdata=data1.data.list
+//                $(".map").removeAttr('disabled')
+//                $(".map").html("地图")
+//                for(var i=0;i<listdata.length;i++){
+//                    if(listdata[i]['lon']) {
+//                        data.push({'lon':listdata[i]['lon'],'lat':listdata[i]['lat']})}
+//                    console.log("成功")
+//                }
+//                sessionStorage.mapData=JSON.stringify(data)
+//            },
+//            error: function (jqXHR, textStatus, errorThrown) {
+//
+//                console.log("失败")
+//                console.log(jqXHR);
+//            }
+//        })
+//
+//
+//
+//
+//
+//    })();
+//
+//    var poins=function (data) {
+//        console.log("成功2");
+//        if (!data) return;
+//        var points=[];
+//        var num=parseInt(data.length/10);
+//        function  sliceArr(arr,size) {
+//            var result=[];
+//            for(var i=0;i<Math.ceil(arr.length / size);i++){
+//                var start=i*size;
+//                var end=(i+1)*size;
+//                result.push(arr.slice(start,end))
+//            }
+//
+//            return result
+//        }
+//        for(var  i=0;i<data.length;i++){
+//            points.push(new BMap.Point(data[i]['lon'],data[i]['lat']))
+//        }
+//        var arr=sliceArr(points,5);
+//        return arr
+//    };
+//
+//    function addMarker(point){
+//
+//        var marker = new BMap.Marker(point);
+//        map.addOverlay(marker);
+//    }
 
 
     // 百度地图API功能
     var map = new BMap.Map("allmap");    // 创建Map实例
-    map.centerAndZoom(new BMap.Point(90.404, 34.915), 6);
+    map.centerAndZoom(new BMap.Point(105.404, 34.915), 5);
     map.enableScrollWheelZoom();
     map.enableInertialDragging();
-
     map.enableContinuousZoom();
     function ZoomControl(){
         // 默认停靠位置和偏移量
@@ -203,24 +203,24 @@
     map.addControl(myZoomCtrl);
     var size = new BMap.Size(50, 25);
 
-    var mapdata=poins(JSON.parse(sessionStorage.mapData));
-    console.log(mapdata);
-    console.log(JSON.parse(sessionStorage.mapData));
-    translateCallback = function (data){
-        if(data.status === 0) {
-            for (var i = 0; i < data.points.length; i++) {
-                map.addOverlay(new BMap.Marker(data.points[i]));
-                map.setCenter(data.points[i]);
-            }
-        }
-    };
-    setTimeout(function(){
-        var convertor = new BMap.Convertor();
-        for(var i=0;i<mapdata.length;i++){
-            convertor.translate(mapdata[i], 1, 5, translateCallback)
-        }
-
-    }, 1000);
+//    var mapdata=poins(JSON.parse(sessionStorage.mapData));
+//    console.log(mapdata);
+//    console.log(JSON.parse(sessionStorage.mapData));
+//    translateCallback = function (data){
+//        if(data.status === 0) {
+//            for (var i = 0; i < data.points.length; i++) {
+//                map.addOverlay(new BMap.Marker(data.points[i]));
+//                map.setCenter(data.points[i]);
+//            }
+//        }
+//    };
+//    setTimeout(function(){
+//        var convertor = new BMap.Convertor();
+//        for(var i=0;i<mapdata.length;i++){
+//            convertor.translate(mapdata[i], 1, 5, translateCallback)
+//        }
+//
+//    }, 1000);
 
 
     /*map.addControl(new BMap.MapTypeControl());   //添加地图类型控件*/
@@ -302,7 +302,7 @@
 
         //地图初始化
         var bm = new BMap.Map("allmap");
-        bm.centerAndZoom(ggPoint, 18);
+        bm.centerAndZoom(ggPoint, 17);
         bm.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
         //添加gps marker和label
 
@@ -314,7 +314,7 @@
                 marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                 bm.setCenter(data.points[0]);
             }
-        }
+        };
 
         setTimeout(function(){
             var convertor = new BMap.Convertor();
@@ -322,6 +322,8 @@
             pointArr.push(ggPoint);
             convertor.translate(pointArr, 1, 5, translateCallback)
         }, 1);
+
+
 
 
 

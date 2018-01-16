@@ -68,7 +68,7 @@
         .fixed-table-pagination .pagination-info {
             line-height: 34px;
             margin-right: 5px;
-            margin-left: 20px;
+            margin-left: 10px;
             text-align: center;
         }
         .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
@@ -113,7 +113,7 @@
     function initTable() {
 //        $table.bootstrapTable("destroy");
         $table.bootstrapTable({
-            height:950,
+            height:getHeight(),
             url:url,
             method: 'GET',
             dataType: 'json',
@@ -169,12 +169,21 @@
         }
         console.log(res);
     }
+    function getHeight() {
+        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true) ;
+    }
+    $(window).resize(function () {
+        $table.bootstrapTable('resetView', {
+            height:$(window).height() - 50
+        });
+    });
     var operateEvents = {
         'click .SSN': function (e, value, row, index) {
+            parent.rightFrame.location.href="righttable.html";
 
             window.parent.lon1 = row.lon;
             window.parent.lat1 = row.lat;
-            window.parent.pointjump()
+            window.parent.pointjump();
             sessionStorage.jingdu = row.lon;
             sessionStorage.weidu = row.lat;
             sessionStorage.shangbao = row.reportTime;
@@ -278,7 +287,7 @@
 
 
 
-            window.parent.rightFrame.location.reload();
+//            window.parent.rightFrame.location.reload();
 
         }
     };

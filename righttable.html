@@ -11,17 +11,19 @@
         float: right;
         color: black;
     }
+
+
 </style>
 <body>
-<div style="height: 92vh">
+<div class="cont" style="height: 92vh">
     <div class="top" style="float:left;width: 100%;">
-        <p style="font-size: 0.9em;margin-top: -2px;">实时车况:</p>
-        <p  style="font-size: 0.95em;">状态:<span id="zhuangtai"></span></p>
+        <p style="font-size: 0.9em;margin-top: 2px;">实时车况/<span id="Sn2" style="float: none;color: #717171;"></span></p>
+        <p  style="font-size: 0.95em;margin-top: 20px;">状态:<span id="zhuangtai"></span></p>
         <p  style="font-size: 0.95em;">车载电池电量:<span id="chezai"></span></p>
         <p  style="font-size: 0.95em;">内置电池电量:<span id="neizhi"></span></p>
         <p style="font-size: 0.95em;">基站信号:<span id="jizhan"></span></p>
         <p  style="font-size: 0.95em;">卫星信号:<span id="weixing"></span></p>
-        <p  style="font-size: 0.95em;">经纬度:<span id="jingwei"></span></p>
+        <p  style="font-size: 0.95em;height: 35px;">经纬度:<span style="font-size: 0.9em" id="jingwei"></span></p>
         <p  style="font-size: 0.95em;">位置:<span id="weizhi"></span></p>
         <p  style="font-size: 0.95em;">上报时间:<span id="shangbao"></span></p>
 
@@ -67,7 +69,7 @@
         document.getElementById("neizhi").innerHTML = sessionStorage.neizhi;
         document.getElementById("jizhan").innerHTML = sessionStorage.jizhan;
         document.getElementById("weixing").innerHTML = sessionStorage.weixing;
-        document.getElementById("jingwei").innerHTML = sessionStorage.jingdu+","+sessionStorage.weidu;
+        document.getElementById("jingwei").innerHTML = sessionStorage.jingdu+",</br>"+sessionStorage.weidu;
         document.getElementById("shangbao").innerHTML = sessionStorage.shangbao;
         var geoc = new BMap.Geocoder();
             var lng = sessionStorage.jingdu;
@@ -80,6 +82,7 @@
                 document.getElementById("weizhi").innerHTML = addComp.province + addComp.city + addComp.district + addComp.street+ addComp.streetNumber;
             });
         document.getElementById("Sn").innerHTML = sessionStorage.Sn;
+        document.getElementById("Sn2").innerHTML = sessionStorage.Sn;
         document.getElementById("daoqi").innerHTML = sessionStorage.daoqi;
 
         document.getElementById("riqi1").innerHTML = sessionStorage.riqi1;
