@@ -57,8 +57,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse" style="height: 60px;">
             <div style="height: 60px;">
-                <div class="brand" style="font-size: 26px;color: #fff;padding-left: 0;margin-left: 2%;"><span id="productName">保险后台管理系统</span></div>
-                <ul class="nav pull-right" style="padding-top: 5px;">
+                <div class="brand" style="font-size: 26px;color: #fff;padding-left: 0;margin-left: 1%;text-shadow: none;margin-top: 4px;"><span id="productName">保险后台管理系统</span></div>
+                <ul class="nav pull-right" style="padding-top: 5px;float: right">
                     <li id="tabActive" style="float: left;"><a style="font-size:16px;text-decoration : none; height: 60px;
                     margin-top: -5px;padding-top: 18px;padding-right: 25px;" href="pageone.html" target="mainFrame" title="">
                         <span class="glyphicon glyphicon-globe"> 实时监控</span></a></li>
@@ -66,55 +66,68 @@
                     margin-top: -5px;padding-top: 18px;padding-right: 25px;margin-right: 20px;"
                                                 href="pagetwo.html" target="mainFrame" title="">
                         <span class="glyphicon glyphicon-check"> 保险审核</span></a></li>
-                    <li id="insname" style="float: left;width: 120px;height: 50px;
-                                   margin-right: 10px;text-align: center;padding-top:12px;font-size: 1.4em;
-                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称</li>
-                </ul>
-                <!--<ul id="signout" class="nav pull-right">-->
 
-                <!--<li><a href="login.html" title="退出登录" style="color: #fff;font-size: 14px;margin-top: 4px;">退出</a></li>-->
-                <!--</ul>-->
+                        <ul  class="nav navbar-nav navbar-right" style="float:right;">
+
+                            <li class="dropdown">
+                                <a href="#" id="insname"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                   style="float: left;height: 50px;margin-right: 10px;text-align: center;padding-top:15px;font-size: 1.4em;
+                                       background-color: #4a4545; margin-bottom: 5px;margin-right: 20px;width: 140px;
+                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li style="text-align: center;font-size: 14px;"><a href="login.html" style="font-size: 15px"><span class="glyphicon glyphicon-log-out"> </span> 注销</a></li>
+
+                                </ul>
+
+                        </ul>
+
+                    </li>
+
+                </ul>
+
+
             </div><!--/.nav-collapse -->
         </div>
     </div>
 </nav>
-    <div id="allmap" style="position:absolute;z-index:0;width: 96%;height: 90%; margin-top:80px; margin-left:2%;
+    <div id="allmap" style="position:absolute;z-index:0;width: 98%;height: 90%; margin-top:80px; margin-left:1%;
       box-shadow:0 0 10px rgba(0,0,0,0.2);border-radius: 3px;pointer-events:auto;"></div>
-    <div id="leftcon"  onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
-      background-color: #fff;width:16.5%;cursor:pointer;height: 45px;pointer-events:auto;
-      border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px; margin-left:3%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 246px;">
+    <div id="leftcon"  onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.32);
+      background-color: #fff;width:16.2%;cursor:pointer;height: 45px;pointer-events:auto;
+      border-radius: 3px; margin-left:2%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 280px;">
         <p id="rightp" style="font-size: 1.3em;margin-top: 8px;-moz-user-select: none;
          -khtml-user-select: none;user-select: none;white-space: nowrap;">设 备 列 表<span id="leftsp"
-         style="margin-left: 40%;" class="glyphicon glyphicon-chevron-down"></span></p>
+         style="margin-left: 48%;" class="glyphicon glyphicon-chevron-down"></span></p>
     </div>
 
-    <div id="leftbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
-         width:16.5%;height:78%; margin-left:3%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);display: none;pointer-events:auto;min-width: 246px;">
+    <div id="leftbox" style="position:fixed;background-color: #fff;border-radius: 3px;
+         width:16.2%;height:78%; margin-left:2%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.32);display: none;pointer-events:auto;min-width: 280px;">
 
         <iframe id=leftFrame" name="leftFrame" src="lefttable.html" style="overflow: scroll; height: 100%;" scrolling="auto" frameborder="no" width="100%"></iframe>
 
     </div>
     <div style="position:fixed;width:15%;height: 45px;pointer-events:auto;white-space: nowrap;min-width: 158px;">
-        <div id="rightcon" onClick="show2('rightbox','rightcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.36);
+        <div id="rightcon" onClick="show2('rightbox','rightcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.32);
         background-color: #fff;width:10%;cursor:pointer;height: 45px;pointer-events:auto;
-        border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:78%;top: 100px;text-align: center;white-space: nowrap;min-width: 108px;">
+        border-radius: 3px;margin-left:78%;top: 100px;text-align: center;white-space: nowrap;min-width: 108px;">
             <p style="font-size: 1.3em;margin-top: 10px;text-align: center;-moz-user-select: none;
-         -khtml-user-select: none;user-select: none;"><span>设 备 详 情</span></p>
+         -khtml-user-select: none;user-select: none;"><span id="conSN">设 备 详 情</span></p>
 
         </div>
 
-        <div id="righticon" onclick="ee('rightbox','righticon')" style="box-shadow:0 0 10px rgba(0,0,0,0.36);background-color: #fff;width:45px;
-            cursor:pointer;height: 45px;border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;margin-left:90%;
+        <div id="righticon" onclick="ee('rightbox','righticon')" style="box-shadow:0 0 10px rgba(0,0,0,0.32);background-color: #fff;width:45px;
+            cursor:pointer;height: 45px;border-radius: 3px;margin-left:93.2%;
             margin-top: 100px;pointer-events:auto;position: fixed;">
             <span class="glyphicon glyphicon-bell" style="font-size: 2em;padding-top: 10px;padding-left: 8px;"></span>
         </div>
     </div>
 
 
-    <div id="rightbox" style="position:fixed;background-color: #fff; border: 1px rgba(62,142,129,0.35) solid;border-radius: 3px;
-      width:17.5%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.36);pointer-events:auto;min-width: 200px;">
+    <div id="rightbox" style="position:fixed;background-color: #fff;border-radius: 3px;
+      width:17.5%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.32);pointer-events:auto;min-width: 280px;">
         <iframe id="rightFrame" name="rightFrame" src="warning.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
     </div>
+
 </body>
 <script type="text/javascript" >
 //    var mapData=(function () {
@@ -329,6 +342,11 @@
 
 
     }
+    function changesn() {
+        var ssnn=warnsn
+        document.getElementById("conSN").innerHTML=ssnn
+
+    }
     window.onload = function(e, value, row, index){
 
 
@@ -347,7 +365,6 @@
                 console.log("成功");
                 console.log(json);
                 document.getElementById("insname").innerHTML = JSON.stringify(json.data.nickname);
-                console.log(JSON.stringify(json.data.nickname))
 
 
 

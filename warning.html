@@ -44,23 +44,23 @@
         .cont::-webkit-scrollbar {
             display: none;
         }
-        .alarm{
-            background: url("img/timg.jpg");
-        }
+
     </style>
 </head>
 <body>
 <div class="cont" style="height: 99.9vh;overflow-y: scroll;">
 <div><HR style="width: 99%;color: #ccc"  SIZE=1></div>
-<p style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1em;"></span></p>
+<p id="pId" style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1em;white-space: nowrap;"></p>
 </div>
 
 </body>
 <script type="text/javascript">
     window.onload = function(){
 
+
+
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=20&sidx=id&order=desc",
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -72,10 +72,32 @@
 
 
                 for(var i=0;i<res.data.list.length;i++){
-                    mm=res.data.list[i].ccuSn+"&nbsp;&nbsp;"+res.data.list[i].content;
-                    nn=res.data.list[i].alarmTime;
-                    $("p").append("<span class='glyphicon glyphicon-volume-up' style='color: red'></span>"+nn+"<br/>");
-                    $("p").append(mm+"<hr>");
+
+                    var alaremst;
+
+                    if(res.data.list[i].alarmType==0){
+                        alaremst="故障告警";
+                    }
+                    if(res.data.list[i].alarmType==1){
+                        alaremst="震动告警";
+                    }
+                    if(res.data.list[i].alarmType==2){
+                        alaremst="内置电池低告警";
+                    }
+                    if(res.data.list[i].alarmType==4){
+                        alaremst="断电告警";
+                    }
+                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].ccuSn+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;"+res.data.list[i].alarmTime;
+                    nn="发出"+alaremst;
+                    oo="<a style='text-decoration: none'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>";
+
+
+
+
+                    $("p").append("<img  src='img/Group%2017.png' width='22px' height='22px'>"+"&nbsp;"+mm+"<br/>");
+                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<hr>");
+
                 }
 
             },
@@ -87,11 +109,12 @@
 
         setInterval("publicBusi()",10000);
 
+
     };
 
     function publicBusi(){
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=20&sidx=id&order=desc",
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -102,13 +125,33 @@
             success: function (res) {
 
                 $('#pId').html('')
+
                 for(var i=0;i<res.data.list.length;i++){
-                    mm=res.data.list[i].ccuSn+"&nbsp;&nbsp;"+res.data.list[i].content;
-                    nn=res.data.list[i].alarmTime;
+
+                    var alaremst;
+
+                    if(res.data.list[i].alarmType==0){
+                        alaremst="故障告警";
+                    }
+                    if(res.data.list[i].alarmType==1){
+                        alaremst="震动告警";
+                    }
+                    if(res.data.list[i].alarmType==2){
+                        alaremst="内置电池低告警";
+                    }
+                    if(res.data.list[i].alarmType==4){
+                        alaremst="断电告警";
+                    }
+                    mm="<a  style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].ccuSn+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;"+res.data.list[i].alarmTime;
+                    nn="发出"+alaremst;
+                    oo="<a style='text-decoration: none'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>";
 
 
-                    $("p").append("<span class='glyphicon glyphicon-volume-up' style='color: red'></span>"+nn+"<br/>");
-                    $("p").append(mm+"<hr>");
+
+
+                    $("p").append("<img  src='img/Group%2017.png' width='22px' height='22px'>"+"&nbsp;"+mm+"<br/>");
+                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<hr>");
                 }
 
             },
@@ -118,6 +161,127 @@
             }
         })
     }
+
+    function showMessage(ojb){
+
+        var index_str = ojb.id;
+        var id = index_str.substring(index_str.lastIndexOf("-")+1,index_str.length);
+
+        window.parent.warnsn = id;
+        window.parent.changesn();
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+//            beforeSend: function (xhr) {
+//                /* Authorization header */
+//                xhr.setRequestHeader("Authorization", sessionStorage.token);
+//            },
+
+            success: function (res) {
+
+                console.log(res);
+                sessionStorage.Sn=res.data.list[0].ccuSn;
+
+
+                console.log(sessionStorage.Sn);
+
+
+                sessionStorage.riqi1=res.data.list[0].buyTime;
+                sessionStorage.pinpai=res.data.list[0].brand;
+                sessionStorage.xinghao=res.data.list[0].model;
+                sessionStorage.chejia=res.data.list[0].vin;
+                sessionStorage.jinee=res.data.list[0].buyPrice;
+                sessionStorage.invoice=res.data.list[0].billImg;
+                if(res.data.list[0].city==null||res.data.list[0].city=="null"){
+                    var ssq2=res.data.list[0].province
+                }
+                else if(res.data.list[0].district==null||res.data.list[0].district=="null"){
+                    var ssq2=res.data.list[0].province+res.data.list[0].city
+                }else {
+                    var ssq2=res.data.list[0].province+res.data.list[0].city+res.data.list[0].district
+                }
+                sessionStorage.shengshi=ssq2;
+                sessionStorage.carpic2=res.data.list[0].scooterImg[1];
+                sessionStorage.carpic1=res.data.list[0].scooterImg[0];
+                sessionStorage.xingming=res.data.list[0].applicant;
+                sessionStorage.shenfen=res.data.list[0].idNumber;
+                sessionStorage.shouji=res.data.list[0].phoneNumber;
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败")
+                console.log(jqXHR);
+            }
+        });
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+id,
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            },
+
+            success: function (res) {
+                console.log(res);
+
+                sessionStorage.daoqi=res.data.list[0].simValidityTime;
+                window.parent.lon1 = res.data.list[0].lon;
+                window.parent.lat1 = res.data.list[0].lat;
+                window.parent.pointjump();
+                sessionStorage.jingdu = res.data.list[0].lon;
+                sessionStorage.weidu = res.data.list[0].lat;
+                sessionStorage.shangbao = res.data.list[0].reportTime;
+                sessionStorage.chezai = res.data.list[0].bmsSoh-100;
+//                var v;
+//                if(res.data.list[0].dcuVbat==0){
+//                    v="0"
+//                }
+//                else if(res.data.list[0].dcuVbat==3){
+//                    v="33%"
+//                }
+//                else if(res.data.list[0].dcuVbat==6){
+//                    v="66%"
+//                }
+//                else if(res.data.list[0].dcuVbat==9){
+//                    v="99%"
+//                }
+                sessionStorage.neizhi = res.data.list[0].dcuVbat;
+                sessionStorage.jizhan = res.data.list[0].dcuGsmRssi;
+                sessionStorage.weixing = res.data.list[0].dcuGpsRssi;
+                sessionStorage.weizhi = res.data.list[0].lon+res.data.list[0].lat;
+                var q;
+                if(res.data.list[0].status==0){
+                    q="设防"
+                }
+                else if(res.data.list[0].status==1){
+                    q="撤防"
+                }
+                else if(res.data.list[0].status==2){
+                    q="P档"
+                }
+                else if(res.data.list[0].status==3){
+                    q="骑行"
+                }
+                else{
+                    q="状态不明"
+                }
+                sessionStorage.zhuangtai=q;
+
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败")
+                console.log(jqXHR);
+            }
+        });
+
+
+    }
+
 
 
 

@@ -86,7 +86,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse" style="height: 60px;">
             <div style="height: 60px;">
-                <div class="brand" style="font-size: 26px;color: #fff;padding-left: 0;margin-left: 2%;"><span id="productName">保险后台管理系统</span></div>
+                <div class="brand" style="font-size: 26px;color: #fff;padding-left: 0;margin-left: 1%;text-shadow: none;margin-top: 4px;"><span id="productName">保险后台管理系统</span></div>
                 <ul class="nav pull-right" style="padding-top: 5px;">
                     <li style="float: left;"><a style="font-size:16px;text-decoration : none; height: 60px;
                     margin-top: -5px;padding-top: 18px;padding-right: 25px;" href="pageone.html" target="mainFrame" title="">
@@ -95,9 +95,20 @@
                     margin-top: -5px;padding-top: 18px;padding-right: 25px;margin-right: 20px;"
                                                 href="pagetwo.html" target="mainFrame" title="">
                         <span class="glyphicon glyphicon-check"> 保险审核</span></a></li>
-                    <li id="insname" style="float: left;width: 120px;height: 50px;
-                                   margin-right: 10px;text-align: center;padding-top:12px;font-size: 1.4em;
-                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称</li>
+                    <ul  class="nav navbar-nav navbar-right" style="float:right;">
+
+                        <li class="dropdown">
+                            <a href="#" id="insname"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                               style="float: left;height: 50px;margin-right: 10px;text-align: center;padding-top:15px;font-size: 1.4em;
+                                       background-color: #4a4545; margin-bottom: 5px;margin-right: 20px;width: 140px;
+                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li style="text-align: center;font-size: 14px;"><a href="login.html" style="font-size: 15px"><span class="glyphicon glyphicon-log-out"> </span> 注销</a></li>
+
+                            </ul>
+
+                    </ul>
+
                 </ul>
                 <!--<ul id="signout" class="nav pull-right">-->
 
@@ -107,7 +118,7 @@
         </div>
     </div>
 </nav>
-<div class="container" style="width: 96%;height: 90%; margin-top:80px; margin-left:2%;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
+<div class="container" style="width: 98%;height: 90%; margin-top:80px; margin-left:1%;box-shadow:0 0 10px rgba(0,0,0,0.36);border-radius: 3px;">
 
     <div>
         <iframe id="myFrame" name="myFrame" src="list1.html" style="width: 100%;height: 88.8vh;"></iframe>

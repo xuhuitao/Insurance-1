@@ -1,0 +1,22 @@
+<ul id="userControl" class="nav pull-right">
+    <li id="themeSwitch" class="dropdown">
+
+        <ul class="dropdown-menu">
+            <li><a href="#" onclick="location='/theme/default?url='+location.href">默认主题</a></li><li><a href="#" onclick="location='/theme/cerulean?url='+location.href">天蓝主题</a></li><li><a href="#" onclick="location='/theme/readable?url='+location.href">橙色主题</a></li><li><a href="#" onclick="location='/theme/united?url='+location.href">红色主题</a></li><li><a href="#" onclick="location='/theme/flat?url='+location.href">Flat主题</a></li>
+            <li><a href="javascript:cookie('tabmode','1');location=location.href">开启页签模式</a></li>
+        </ul>
+        <!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->
+    </li>
+    <li id="userInfo" class="dropdown open">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, 徐会涛&nbsp;<span id="notifyNum" class="label label-info hide"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="/a/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp;xxx</a></li>
+            <li><a href="/a/sys/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  ccc</a></li>
+        </ul>
+    </li>
+    <li><a href="/a/logout" title="退出登录">退出</a></li>
+    <li>&nbsp;</li>
+</ul>
+style="float: left;width: 120px;height: 50px;
+margin-right: 10px;text-align: center;padding-top:12px;font-size: 1.4em;
+color: rgba(180,180,180,0.93);font-weight: 600"

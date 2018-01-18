@@ -51,34 +51,38 @@
             /*overflow: hidden;*/
             overflow: hidden;
             -webkit-line-clamp: 2;
+            font-size: 15px;
 
 
 
         }
         tr{
-            height: 55px;
+            height: 48px;
         }
         td{
             height: 0px;
         }
-        .fixed-table-header{
-            height: 40px;
 
-        }
+
         .fixed-table-pagination .pagination-info {
             line-height: 34px;
-            margin-right: 5px;
-            margin-left: 10px;
+
+
             text-align: center;
+            font-size: 0;
+        }
+        .nowwrp1{
+            overflow: hidden;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            width:90px;
+            text-align: left;
+
         }
         .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
-            padding: 8px;
-            line-height: 24px;
-            vertical-align: top;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            padding-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
@@ -109,7 +113,7 @@
 </body>
 <script type="text/javascript">
     var $table = $('#table');
-    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc";
+    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/ebike?sidx=id&order=desc";
     function initTable() {
 //        $table.bootstrapTable("destroy");
         $table.bootstrapTable({
@@ -130,13 +134,13 @@
 
             pagination: true,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 20,                       //每页的记录行数（*）
-            pageList: [10, 20, 50, 100],        //可供选择的每页的行数（*）
+            pageSize: 9,                       //每页的记录行数（*）
+//            pageList: [5, 20, 50, 100],        //可供选择的每页的行数（*）
             responseHandler: responseHandler,
             columns: [{
                 field: 'id',
                 title: 'SN号',
-                align: 'center',
+                align: 'left',
                 valign: 'middle',
                 events: operateEvents,
                 formatter:idFormatter
@@ -145,6 +149,8 @@
         });
         // sometimes footer render error.
     }
+
+
     function queryParams(params) {
         var param = {
             limit: this.pageSize, // 页面大小
@@ -170,16 +176,18 @@
         console.log(res);
     }
     function getHeight() {
-        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true) ;
+        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true)-60 ;
     }
     $(window).resize(function () {
         $table.bootstrapTable('resetView', {
-            height:$(window).height() - 50
+            height:$(window).height() - 60
         });
     });
     var operateEvents = {
         'click .SSN': function (e, value, row, index) {
             parent.rightFrame.location.href="righttable.html";
+            window.parent.warnsn = row.ccuSn;
+            window.parent.changesn();
 
             window.parent.lon1 = row.lon;
             window.parent.lat1 = row.lat;
@@ -188,20 +196,20 @@
             sessionStorage.weidu = row.lat;
             sessionStorage.shangbao = row.reportTime;
             sessionStorage.chezai = row.bmsSoh-100;
-            var v;
-            if(row.dcuVbat==0){
-                v="0"
-            }
-            else if(row.dcuVbat==3){
-                v="33%"
-            }
-            else if(row.dcuVbat==6){
-                v="66%"
-            }
-            else if(row.dcuVbat==9){
-                v="99%"
-            }
-            sessionStorage.neizhi = v;
+//            var v;
+//            if(row.dcuVbat==0){
+//                v="0"
+//            }
+//            else if(row.dcuVbat==3){
+//                v="33%"
+//            }
+//            else if(row.dcuVbat==6){
+//                v="66%"
+//            }
+//            else if(row.dcuVbat==9){
+//                v="99%"
+//            }
+            sessionStorage.neizhi = row.dcuVbat;
             sessionStorage.jizhan = row.dcuGsmRssi;
             sessionStorage.weixing = row.dcuGpsRssi;
             sessionStorage.weizhi = row.lon+row.lat;
@@ -218,6 +226,9 @@
             else if(row.status==3){
                 q="骑行"
             }
+            else {
+                q="状态不明"
+            }
             sessionStorage.zhuangtai=q;
 
             $.ajax({
@@ -233,7 +244,7 @@
                 success: function (res) {
                     console.log(res);
                     sessionStorage.Sn=res.data.list[0].ccuSn;
-                    console.log(sessionStorage.Sn);
+
 
 
                     sessionStorage.riqi1=res.data.list[0].buyTime;
@@ -276,7 +287,6 @@
                 success: function (res) {
                     console.log(res);
                     sessionStorage.daoqi=res.data.list[0].simValidityTime;
-                    console.log(sessionStorage.daoqi);
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -292,11 +302,84 @@
         }
     };
     initTable();
+
+
     function idFormatter(value,row,index) {
+//        var car =row.online==true?"img/alarm_msg.png":row.online==false?"img/alarm_msg.png"
+
+        if(row.online==true){
+            car="img/online_fill.png";
+
+            }
+         else if(row.online==false){
+            car="img/online.png";
+
+            }
+            if(row.online==true&&row.status==0){
+                car2="img/status_lock_selected.png";
+            }
+        else if(row.online==true&&row.status==1){
+                car2="img/status_unlock_selected.png";
+            }
+        else if(row.online==true&&row.status==2){
+                car2="img/status_p_selected.png";
+            }
+        else if(row.online==true&&row.status==3){
+                car2="img/status_d_selected.png";
+            }
+        else if(row.online==true){
+                car2="123";
+            }
+
+        if(row.online==false&&row.status==0){
+            car2="img/status_lock.png";
+        }
+        else if(row.online==false&&row.status==1){
+            car2="img/status_unlock.png";
+        }
+        else if(row.online==false&&row.status==2){
+            car2="img/status_p.png";
+        }
+        else if(row.online==false&&row.status==3){
+            car2="img/status_d.png";
+        }
+        else if(row.online==false){
+            car2="123";
+        }
+//        if(row.status==0){
+//            car2="img/2.png"
+//        }
+//        if(row.status==1){
+//            car2="img/2.png"
+//        }
+//        if(row.status==2){
+//            car2="img/2.png"
+//        }
+//        if(row.status==3){
+//            car2="img/2.png"
+//        }
+
+
         var inner=row.ccuSn;
+        var inner2=row.applicant+"|"+row.createTime+"&nbsp;激活";
+
+
         return [
-            '<a class="SSN">'+inner+'</a>'+'&nbsp;'
+
+            '<a class="SSN" >'+inner+'</a>'+'&nbsp;&nbsp;',
+            '<img  src='+car+' width="15px" height="14px" style="margin-bottom: 2px;"/>',
+
+            '</span>'+'&nbsp;&nbsp;',
+
+            '<img  src='+car2+' width="15px" height="14px" style="margin-bottom: 2px;"/>',
+            '</span>',
+            '</br>',
+            '<span>',
+            inner2,
+            '</span>'
+
         ].join('');
+
     }
     $(".search").on("click",function () {
 
@@ -314,8 +397,7 @@
             },
             success: function (res) {
                 $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()});
-                console.log(res.data.list[0].lon)
-                console.log(res.data.list[0].lat)
+
                 window.parent.lon1 = res.data.list[0].lon;
                 window.parent.lat1 = res.data.list[0].lat;
                 window.parent.pointjump()

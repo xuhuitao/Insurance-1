@@ -40,7 +40,11 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=upXkuuhfOOuQkOlW7yxP0cVHRKIseXmc"></script>
     <![endif]-->
     <title>待审核</title>
-
+    <style>
+        .bootstrap-table{
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <nav>
@@ -56,7 +60,7 @@
 <div id="toolbar">
     <div class="my-container">
         <div class="myText-content" style="white-space: nowrap;">
-            <input type="text" class="form-control searchResult"  style="display: inline-block;width: 200px;margin-top: 25px"
+            <input type="text" class="form-control searchResult"  style="display: inline-block;width: 200px;margin-top: 30px"
                    placeholder="请输入投保人姓名" onblur="if(this.placeholder==''){this.placeholder='请输入投保人姓名'}"
                    onfocus="if(this.placeholder=='请输入投保人姓名'){this.placeholder=''}" > <button type="button"
                    class="btn btn-default search" id="search" style=";border-bottom-right-radius: 5px;border-top-right-radius: 5px;
@@ -65,9 +69,9 @@
         </div>
     </div>
 </div>
-<div class="fixed-table-toolbar" style="white-space: nowrap;"><div class="columns columns-right btn-group pull-right">
+<div class="fixed-table-toolbar" style="white-space: nowrap;margin-top: 10px;"><div class="columns columns-right btn-group pull-right">
     <button class="btn btn-default "  style="color: #fff;background-color: rgb(22, 132, 194);">
-        <a style="color: white" href="http://cjl3.rokyinfo.net:8110/v1.0/orders/excel?status=1"><span class="glyphicon glyphicon-download-alt" id="daochu" style="bottom: 1px;">&nbsp;导出</span></a>
+        <a id="daochu"  style="color: white"><span class="glyphicon glyphicon-download-alt" style="bottom: 1px;">&nbsp;导出</span></a>
     </button></div></div>
 <table id="table"
        data-search="false"
@@ -80,7 +84,7 @@
        data-page-list="[10, 20, 50, 100, ALL]"
        data-show-footer="false"
        data-side-pagination="server"
-       data-url="http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=1"
+       data-url="#"
        data-cache="true"
        data-response-handler="responseHandler">
 </table>
@@ -89,7 +93,7 @@
 
 <script type="text/javascript">
     var $table = $('#table');
-    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=1";
+    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/orders?sidx=id&order=desc&belong=1&status=1";
     function initTable() {
 //        $table.bootstrapTable("destroy");
         $table.bootstrapTable({
@@ -154,11 +158,11 @@
         // sometimes footer render error.
     }
     function getHeight() {
-        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true) ;
+        return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true)-10 ;
     }
     $(window).resize(function () {
         $table.bootstrapTable('resetView', {
-            height:$(window).height() - 50
+            height:$(window).height() - 55
         });
     });
     function queryParams(params) {
@@ -231,6 +235,7 @@
     var operateEvents = {
         'click .newpage': function (e, value, row, index) {
             parent.document.getElementById("myFrame").src="check.html";
+            sessionStorage.dingdan="待审核/";
             sessionStorage.name2=row.applicant;
             sessionStorage.idcard2=row.idNumber;
             sessionStorage.phone2=row.phoneNumber;
@@ -252,7 +257,7 @@
             sessionStorage.buytime2=row.buyTime;
             sessionStorage.carpic12=row.scooterImg[0];
             sessionStorage.carpic22=row.scooterImg[1];
-            console.log(sessionStorage.carpic1);
+            console.log(sessionStorage.carpic12);
             sessionStorage.xulie2=row.ccuSn;
             sessionStorage.xianming2=row.insuranceProductEntity.name;
             sessionStorage.baoe2=row.solutionEntity.desc;
@@ -265,23 +270,6 @@
         }
     };
 
-    $("#daochu").on("click",function () {
-        $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/excel",
-            method: "get",
-            contentType: "application/json; charset=utf-8",
-            cache: false,
-            data: {status: 1},
-            beforeSend: function (xhr) {
-                /* Authorization header */
-                xhr.setRequestHeader("Authorization", sessionStorage.token);
-            },success:function (data) {
-                console.log("成功");
-            },
-            error:function (err) {
-                console.log(err)
-            }})
-    });
 
     initTable();
     $(".search").on("click",function () {
@@ -306,7 +294,29 @@
 
 
     });
-
+    window.onload = function() {
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/excel",
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            data: {status: 1},
+            beforeSend: function (xhr) {
+                /* Authorization header */
+                xhr.setRequestHeader("Authorization", sessionStorage.token);
+            }, success: function (res) {
+                console.log("成功");
+                console.log(res.data.url);
+                var urldaochu=res.data.url;
+                document.getElementById("daochu").href = urldaochu;
+                console.log(document.getElementById("daochu").href);
+            },
+            error: function (err) {
+                console.log(err)
+                console.log("失败")
+            }
+        })
+    };
     document.getElementById("tabOption").getElementsByTagName("a")[0].style.backgroundColor="#1684c2";
     document.getElementById("tabOption").getElementsByTagName("a")[0].style.color="white"
 
