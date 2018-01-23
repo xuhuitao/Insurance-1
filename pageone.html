@@ -40,6 +40,23 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js "></script>
     <![endif]-->
     <title>实时监控</title>
+    <style>
+        .arrow-down {
+            width: 0px;
+            height: 0px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid #ffffff;
+
+            /*以下属性可以是IE5兼容*/
+            font-size: 0px;
+            line-height: 0px;
+            position:fixed;
+            right:50px;
+            margin-top: 147px;
+        }
+
+    </style>
 
 </head>
 <body>
@@ -71,9 +88,9 @@
 
                             <li class="dropdown">
                                 <a href="#" id="insname"  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                                   style="float: left;height: 50px;margin-right: 10px;text-align: center;padding-top:15px;font-size: 1.4em;
-                                       background-color: #4a4545; margin-bottom: 5px;margin-right: 20px;width: 140px;
-                                   color: rgba(180,180,180,0.93);font-weight: 600">保险名称<span class="caret"></span></a>
+                                   style="float: left;height: 40px;margin-right: 10px;text-align: center;padding-top:10px;font-size: 1.2em;
+                                       background-color: #4a4545; margin-bottom: 5px;margin-top:5px;margin-right: 30px;width: 120px;
+                                   color: rgba(202, 197, 197, 0.93);">用户名称<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li style="text-align: center;font-size: 14px;"><a href="login.html" style="font-size: 15px"><span class="glyphicon glyphicon-log-out"> </span> 注销</a></li>
 
@@ -94,40 +111,44 @@
       box-shadow:0 0 10px rgba(0,0,0,0.2);border-radius: 3px;pointer-events:auto;"></div>
     <div id="leftcon"  onClick="show('leftbox','leftcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.32);
       background-color: #fff;width:16.2%;cursor:pointer;height: 45px;pointer-events:auto;
-      border-radius: 3px; margin-left:2%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 280px;">
+      border-radius: 3px; margin-left:2%;margin-top:100px;white-space: nowrap;text-align: center;min-width: 300px;">
         <p id="rightp" style="font-size: 1.3em;margin-top: 8px;-moz-user-select: none;
          -khtml-user-select: none;user-select: none;white-space: nowrap;">设 备 列 表<span id="leftsp"
-         style="margin-left: 48%;" class="glyphicon glyphicon-chevron-down"></span></p>
+         style="margin-left: 50%;top: 3px;" class="glyphicon glyphicon-chevron-down"></span></p>
     </div>
 
     <div id="leftbox" style="position:fixed;background-color: #fff;border-radius: 3px;
-         width:16.2%;height:78%; margin-left:2%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.32);display: none;pointer-events:auto;min-width: 280px;">
+         width:16.2%;height:78%; margin-left:2%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.32);display: none;pointer-events:auto;min-width: 300px;">
 
         <iframe id=leftFrame" name="leftFrame" src="lefttable.html" style="overflow: scroll; height: 100%;" scrolling="auto" frameborder="no" width="100%"></iframe>
 
     </div>
-    <div style="position:fixed;width:15%;height: 45px;pointer-events:auto;white-space: nowrap;min-width: 158px;">
+    <div style="position:fixed;width:15%;height: 45px;pointer-events:auto;white-space: nowrap;min-width: 180px;">
         <div id="rightcon" onClick="show2('rightbox','rightcon')" style="position:fixed;box-shadow:0 0 10px rgba(0,0,0,0.32);
-        background-color: #fff;width:10%;cursor:pointer;height: 45px;pointer-events:auto;
-        border-radius: 3px;margin-left:78%;top: 100px;text-align: center;white-space: nowrap;min-width: 108px;">
+        background-color: #fff;width:180px;cursor:pointer;height: 45px;pointer-events:auto;
+        border-radius: 3px;right:160px;top: 100px;text-align: center;white-space: nowrap;min-width: 108px;">
             <p style="font-size: 1.3em;margin-top: 10px;text-align: center;-moz-user-select: none;
-         -khtml-user-select: none;user-select: none;"><span id="conSN">设 备 详 情</span></p>
+         -khtml-user-select: none;user-select: none;"><span id="conSN"></span></p>
 
         </div>
+
 
         <div id="righticon" onclick="ee('rightbox','righticon')" style="box-shadow:0 0 10px rgba(0,0,0,0.32);background-color: #fff;width:45px;
-            cursor:pointer;height: 45px;border-radius: 3px;margin-left:93.2%;
+            cursor:pointer;height: 45px;border-radius: 3px;right:40px;;
             margin-top: 100px;pointer-events:auto;position: fixed;">
-            <span class="glyphicon glyphicon-bell" style="font-size: 2em;padding-top: 10px;padding-left: 8px;"></span>
+            <span class="glyphicon glyphicon-bell" style="font-size: 1.5em;padding-top: 12px;padding-left: 12px;"></span>
         </div>
     </div>
 
 
-    <div id="rightbox" style="position:fixed;background-color: #fff;border-radius: 3px;
-      width:17.5%; height:78%;margin-left: 78%;margin-top: 160px;box-shadow:0 0 10px rgba(0,0,0,0.32);pointer-events:auto;min-width: 280px;">
+   <div id="down2" class="arrow-down"></div>
+   <div id="rightbox">
+
+    <div  style="position:fixed;background-color: #fff;border-radius: 3px;
+      width:300px; height:75%;right:40px;margin-top: 160px;box-shadow:0 4px 5px rgba(0,0,0,0.32);pointer-events:auto;min-width: 300px;">
         <iframe id="rightFrame" name="rightFrame" src="warning.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
     </div>
-
+   </div>
 </body>
 <script type="text/javascript" >
 //    var mapData=(function () {
@@ -216,31 +237,14 @@
     map.addControl(myZoomCtrl);
     var size = new BMap.Size(50, 25);
 
-//    var mapdata=poins(JSON.parse(sessionStorage.mapData));
-//    console.log(mapdata);
-//    console.log(JSON.parse(sessionStorage.mapData));
-//    translateCallback = function (data){
-//        if(data.status === 0) {
-//            for (var i = 0; i < data.points.length; i++) {
-//                map.addOverlay(new BMap.Marker(data.points[i]));
-//                map.setCenter(data.points[i]);
-//            }
-//        }
-//    };
-//    setTimeout(function(){
-//        var convertor = new BMap.Convertor();
-//        for(var i=0;i<mapdata.length;i++){
-//            convertor.translate(mapdata[i], 1, 5, translateCallback)
-//        }
-//
-//    }, 1000);
+
 
 
     /*map.addControl(new BMap.MapTypeControl());   //添加地图类型控件*/
 
     map.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
 
-    map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT })  ) //左上角标尺
+    map.addControl(new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT })  ); //左上角标尺
 
 
     function show(num,a)
@@ -269,45 +273,57 @@
         }
         function show2(num2,a)
         {
-            document.getElementById("rightFrame").src="righttable.html"
+            document.getElementById("rightFrame").src="righttable.html";
 
             var box2 = document.getElementById(num2);
+            var jiantou2 = document.getElementById("down2");
+
+            jiantou2.style.display = "none";
+
+
 
             if(box2.style.display != "block")
             {
                 box2.style.display = "block";
 
 
+
+
+
             }
             else
             {
                 box2.style.display = "none";
+
+
+
 
             }
         }
         function ee(num3,a) {
             document.getElementById("rightFrame").src="warning.html"
             var box2 = document.getElementById(num3);
+            var jiantou2 = document.getElementById("down2");
+
 
             if(box2.style.display != "block")
             {
                 box2.style.display = "block";
+                jiantou2.style.display = "block";
 
 
             }
             else
             {
                 box2.style.display = "none";
+                jiantou2.style.display = "none";
 
             }
         }
     document.getElementById("tabActive").getElementsByTagName("a")[0].style.color="white";
     function pointjump() {
 
-//        var point = new BMap.Point(lon1, lat1);
-//        var marker = new BMap.Marker(point);  // 创建标注
-//        map.addOverlay(marker);               // 将标注添加到地图中
-//        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
         map.clearOverlays();
         var x = lon1;
         var y = lat1;
@@ -322,9 +338,10 @@
         //坐标转换完之后的回调函数
         translateCallback = function (data){
             if(data.status === 0) {
-                var marker = new BMap.Marker(data.points[0]);
+                var myIcon = new BMap.Icon("img/Group 522.png", new BMap.Size(40,87));
+                var marker = new BMap.Marker(data.points[0],{icon:myIcon});
                 bm.addOverlay(marker);
-                marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+//                marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
                 bm.setCenter(data.points[0]);
             }
         };
@@ -343,7 +360,7 @@
 
     }
     function changesn() {
-        var ssnn=warnsn
+        var ssnn=warnsn;
         document.getElementById("conSN").innerHTML=ssnn
 
     }
@@ -364,7 +381,7 @@
             },success:function (json) {
                 console.log("成功");
                 console.log(json);
-                document.getElementById("insname").innerHTML = JSON.stringify(json.data.nickname);
+                document.getElementById("insname").innerHTML = json.data.nickname;
 
 
 

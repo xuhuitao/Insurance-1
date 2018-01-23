@@ -44,13 +44,18 @@
         .cont::-webkit-scrollbar {
             display: none;
         }
+        hr{
+           margin-top: 5px;
+           width: 98%;
+
+        }
 
     </style>
 </head>
 <body>
-<div class="cont" style="height: 99.9vh;overflow-y: scroll;">
-<div><HR style="width: 99%;color: #ccc"  SIZE=1></div>
-<p id="pId" style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1em;white-space: nowrap;"></p>
+<div class="cont" style="height: 99.9vh;overflow-y: scroll;width: 96%;margin-left: 2%">
+
+<p id="pId" style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1.1em;white-space: nowrap;line-height:20px"></p>
 </div>
 
 </body>
@@ -66,14 +71,16 @@
             cache: false,
             beforeSend: function (xhr) {
                 /* Authorization header */
-                xhr.setRequestHeader("Authorization",sessionStorage.token);
+                xhr.setRequestHeader("Authorization","eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4sQVVUSF9XUklURSIsInN1YiI6ImhlbGxvIiwiZXhwIjoxNTE2Njg2MTEzfQ.BwBObn8EPQrSnEcM9qtoF68iu4cRubtHulAXLfb6XMLUR-xXj5D2UMBCwrkVJS2Jl0D2sixAG7PY-JbkEI_ayQ");
             },
             success: function (res) {
 
-
-                for(var i=0;i<res.data.list.length;i++){
-
-                    var alaremst;
+                var map = {},
+                    dest = [];
+                for(var i=0;i<res.data.list.length;i++) {
+                    var s = res.data.list[i].alarmTime;
+                    var ai = res.data.list[i];
+                                        var alaremst;
 
                     if(res.data.list[i].alarmType==0){
                         alaremst="故障告警";
@@ -87,18 +94,39 @@
                     if(res.data.list[i].alarmType==4){
                         alaremst="断电告警";
                     }
-                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].ccuSn+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;"+res.data.list[i].alarmTime;
-                    nn="发出"+alaremst;
-                    oo="<a style='text-decoration: none'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>";
+                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;";
+                    nn=res.data.list[i].alarmTime+"&nbsp;&nbsp;"+"发生"+alaremst;
+                    oo=res.data.list[i].alarmTime.substring(11, 16);
+                    if (!map[s.substring(0, 10)]) {
+                        $("p").append(s.substring(0, 10)+'<hr>');
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("<br/>");
+
+                        dest.push({
+                            riqi: s.substring(0, 10),
+
+                            data: [ai]
+                        });
+
+                        map[s.substring(0, 10)] = ai;
+                        console.log(dest)
 
 
+                    }
+                    else{
 
-
-                    $("p").append("<img  src='img/Group%2017.png' width='22px' height='22px'>"+"&nbsp;"+mm+"<br/>");
-                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<hr>");
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("<br/>");
+                    }
 
                 }
+
+
+
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -107,7 +135,7 @@
             }
         })
 
-        setInterval("publicBusi()",10000);
+       setInterval("publicBusi()",10000);
 
 
     };
@@ -120,14 +148,15 @@
             cache: false,
             beforeSend: function (xhr) {
                 /* Authorization header */
-                xhr.setRequestHeader("Authorization",sessionStorage.token);
+                xhr.setRequestHeader("Authorization","eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4sQVVUSF9XUklURSIsInN1YiI6ImhlbGxvIiwiZXhwIjoxNTE2Njg2MTEzfQ.BwBObn8EPQrSnEcM9qtoF68iu4cRubtHulAXLfb6XMLUR-xXj5D2UMBCwrkVJS2Jl0D2sixAG7PY-JbkEI_ayQ");
             },
             success: function (res) {
 
-                $('#pId').html('')
-
-                for(var i=0;i<res.data.list.length;i++){
-
+                var map = {},
+                    dest = [];
+                for(var i=0;i<res.data.list.length;i++) {
+                    var s = res.data.list[i].alarmTime;
+                    var ai = res.data.list[i];
                     var alaremst;
 
                     if(res.data.list[i].alarmType==0){
@@ -142,17 +171,39 @@
                     if(res.data.list[i].alarmType==4){
                         alaremst="断电告警";
                     }
-                    mm="<a  style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].ccuSn+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;"+res.data.list[i].alarmTime;
-                    nn="发出"+alaremst;
-                    oo="<a style='text-decoration: none'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>";
+                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;";
+                    nn=res.data.list[i].alarmTime+"&nbsp;&nbsp;"+"发生"+alaremst;
+                    oo=res.data.list[i].alarmTime.substring(11, 16);
+                    if (!map[s.substring(0, 10)]) {
+                        $("p").append(s.substring(0, 10)+'<hr>');
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("<br/>");
+
+                        dest.push({
+                            riqi: s.substring(0, 10),
+
+                            data: [ai]
+                        });
+
+                        map[s.substring(0, 10)] = ai;
+                        console.log(dest)
 
 
+                    }
+                    else{
 
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("<br/>");
+                    }
 
-                    $("p").append("<img  src='img/Group%2017.png' width='22px' height='22px'>"+"&nbsp;"+mm+"<br/>");
-                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                    $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<hr>");
                 }
+
+
+
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -274,7 +325,7 @@
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("失败")
+                console.log("失败");
                 console.log(jqXHR);
             }
         });

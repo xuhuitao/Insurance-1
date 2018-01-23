@@ -45,6 +45,7 @@
             border-right: 0 solid transparent !important;
             border-left: 0 solid transparent !important;
         }
+        .table th{}
 
         table{
             /*white-space:nowrap;*/
@@ -70,6 +71,7 @@
 
             text-align: center;
             font-size: 0;
+
         }
         .nowwrp1{
             overflow: hidden;
@@ -84,6 +86,11 @@
         .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
             text-align: center;
         }
+        .fixed-table-header{
+            height: 0px;
+
+        }
+
     </style>
 </head>
 <body>
@@ -123,7 +130,8 @@
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             cache: false,
-            striped: false,                              //是否显示行间隔色
+            striped: false,
+            clickToSelect: true,
             minimumCountColumns: 2,
             ajaxOptions: {
                 headers: {
@@ -134,7 +142,7 @@
 
             pagination: true,
             pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 9,                       //每页的记录行数（*）
+            pageSize: 8,                       //每页的记录行数（*）
 //            pageList: [5, 20, 50, 100],        //可供选择的每页的行数（*）
             responseHandler: responseHandler,
             columns: [{
@@ -175,23 +183,105 @@
         }
         console.log(res);
     }
+    function idFormatter(value,row,index) {
+//        var car =row.online==true?"img/alarm_msg.png":row.online==false?"img/alarm_msg.png"
+
+        if(row.online==true){
+            car="img/online_fill.png";
+
+        }
+        else if(row.online==false){
+            car="img/online.png";
+
+        }
+        if(row.online==true&&row.status==0){
+            car2="img/status_lock_selected.png";
+        }
+        else if(row.online==true&&row.status==1){
+            car2="img/status_unlock_selected.png";
+        }
+        else if(row.online==true&&row.status==2){
+            car2="img/status_p_selected.png";
+        }
+        else if(row.online==true&&row.status==3){
+            car2="img/status_d_selected.png";
+        }
+        else if(row.online==true){
+            car2="123";
+        }
+
+        if(row.online==false&&row.status==0){
+            car2="img/status_lock.png";
+        }
+        else if(row.online==false&&row.status==1){
+            car2="img/status_unlock.png";
+        }
+        else if(row.online==false&&row.status==2){
+            car2="img/status_p.png";
+        }
+        else if(row.online==false&&row.status==3){
+            car2="img/status_d.png";
+        }
+        else if(row.online==false){
+            car2="123";
+        }
+
+
+
+
+        var inner=row.ccuSn;
+        var inner2=row.applicant+"|"+row.createTime+"&nbsp;激活";
+
+
+        return [
+
+            '<div style="margin-left: 15px;line-height: 24px;">',
+            '<div style="width:120px;float: left">',
+
+            '<a id="'+row.ccuSn+'" class="SSN" style="text-decoration: none;cursor:pointer;">'+inner+'</a>'+'&nbsp;&nbsp;',
+            '</div>',
+
+
+            '<img  src='+car+' width="15px" height="14px" style="margin-bottom: 2px;margin-left: 5px;"/>',
+
+            '</span>'+'&nbsp;&nbsp;',
+
+            '<img  src='+car2+' width="15px" height="14px" style="margin-bottom: 2px;"/>',
+            '</span>',
+
+            '</br>',
+            '<span>',
+            inner2,
+            '</span>',
+
+            '</div>'
+
+        ].join('');
+
+    }
+
     function getHeight() {
         return $(window).height() - $('h1').outerHeight(true) - $('nav').outerHeight(true)-60 ;
     }
     $(window).resize(function () {
         $table.bootstrapTable('resetView', {
-            height:$(window).height() - 60
+            height:$(window).height() - 10
         });
     });
     var operateEvents = {
         'click .SSN': function (e, value, row, index) {
+
             parent.rightFrame.location.href="righttable.html";
+
+
             window.parent.warnsn = row.ccuSn;
             window.parent.changesn();
 
             window.parent.lon1 = row.lon;
             window.parent.lat1 = row.lat;
             window.parent.pointjump();
+
+
             sessionStorage.jingdu = row.lon;
             sessionStorage.weidu = row.lat;
             sessionStorage.shangbao = row.reportTime;
@@ -302,85 +392,12 @@
         }
     };
     initTable();
+    timer=setInterval(function () {
+     $table.bootstrapTable("refresh",{silent: true})
+    },10000)
 
 
-    function idFormatter(value,row,index) {
-//        var car =row.online==true?"img/alarm_msg.png":row.online==false?"img/alarm_msg.png"
 
-        if(row.online==true){
-            car="img/online_fill.png";
-
-            }
-         else if(row.online==false){
-            car="img/online.png";
-
-            }
-            if(row.online==true&&row.status==0){
-                car2="img/status_lock_selected.png";
-            }
-        else if(row.online==true&&row.status==1){
-                car2="img/status_unlock_selected.png";
-            }
-        else if(row.online==true&&row.status==2){
-                car2="img/status_p_selected.png";
-            }
-        else if(row.online==true&&row.status==3){
-                car2="img/status_d_selected.png";
-            }
-        else if(row.online==true){
-                car2="123";
-            }
-
-        if(row.online==false&&row.status==0){
-            car2="img/status_lock.png";
-        }
-        else if(row.online==false&&row.status==1){
-            car2="img/status_unlock.png";
-        }
-        else if(row.online==false&&row.status==2){
-            car2="img/status_p.png";
-        }
-        else if(row.online==false&&row.status==3){
-            car2="img/status_d.png";
-        }
-        else if(row.online==false){
-            car2="123";
-        }
-//        if(row.status==0){
-//            car2="img/2.png"
-//        }
-//        if(row.status==1){
-//            car2="img/2.png"
-//        }
-//        if(row.status==2){
-//            car2="img/2.png"
-//        }
-//        if(row.status==3){
-//            car2="img/2.png"
-//        }
-
-
-        var inner=row.ccuSn;
-        var inner2=row.applicant+"|"+row.createTime+"&nbsp;激活";
-
-
-        return [
-
-            '<a class="SSN" >'+inner+'</a>'+'&nbsp;&nbsp;',
-            '<img  src='+car+' width="15px" height="14px" style="margin-bottom: 2px;"/>',
-
-            '</span>'+'&nbsp;&nbsp;',
-
-            '<img  src='+car2+' width="15px" height="14px" style="margin-bottom: 2px;"/>',
-            '</span>',
-            '</br>',
-            '<span>',
-            inner2,
-            '</span>'
-
-        ].join('');
-
-    }
     $(".search").on("click",function () {
 
             var url="http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()
@@ -409,8 +426,11 @@
         });
 
 
-    })
+    });
 
 
-    </script>
+
+
+</script>
+
 </html>

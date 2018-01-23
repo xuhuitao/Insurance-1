@@ -43,6 +43,10 @@
         .bootstrap-table{
             margin-top: 10px;
         }
+        body{
+            width: 98%;
+            margin-left: 1%;
+        }
     </style>
 </head>
 <body>
@@ -232,7 +236,7 @@
     var operateEvents = {
         'click .newpage': function (e, value, row, index) {
             parent.document.getElementById("myFrame").src="check.html";
-            sessionStorage.dingdan="已过期/";
+            sessionStorage.dingdan="已过期 /";
             sessionStorage.name2=row.applicant;
             sessionStorage.idcard2=row.idNumber;
             sessionStorage.phone2=row.phoneNumber;

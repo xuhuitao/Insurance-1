@@ -136,7 +136,7 @@
     </div>
 </div>
 </div>
-<div class="bottom" style=" position:fixed;width: 100%;margin-top: 20px ">
+<div class="bottom" style=" position:fixed;width: 100%;margin-top: 10px ">
     <button type="button" id="pass" class="button button-glow button-rounded button-highlight">通过</button>
     <button type="button" id="refuse" style="margin-left: 40px;" class="button button-glow button-rounded button-caution">拒绝</button>
 </div>
@@ -288,6 +288,11 @@
             },
             error:function (err) {
                 console.log(err)
+                if(err.status==401){ alert("登录信息已过期，请重新登录");
+                window.location.href="login.html"}
+                if(err.status==403){ alert("权限不足，请重新登录");
+                    window.location.href="login.html"}
+
             }})
     });
 
