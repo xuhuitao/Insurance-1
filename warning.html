@@ -228,6 +228,10 @@
         window.parent.warnsn = id;
 
         window.parent.changesn();
+        window.parent.changesn2();
+//        parent.document.getElementById("rightbox").style.display="none";
+        parent.rightFrame.location.href="righttable.html";
+
         $.ajax({
             url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
             method: "get",

@@ -381,12 +381,29 @@
 
 
     }
+function changesn1() {
+//        parent.rightFrame.location.reload;
+//        document.getElementById('rightFrame').src="righttable.html";
+    document.getElementById("rightcon").style.display="block";
+    document.getElementById("rightbox").style.display="none";
+
+    document.getElementById("down1").style.display="none";
+    document.getElementById("down2").style.display = "none";
+    var ssnn=warnsn;
+    document.getElementById("conSN").innerHTML=ssnn
+
+}
+function changesn2() {
+    document.getElementById("rightbox").style.display="block";
+
+}
     function changesn() {
 //        parent.rightFrame.location.reload;
 //        document.getElementById('rightFrame').src="righttable.html";
         document.getElementById("rightcon").style.display="block";
-        document.getElementById("rightbox").style.display="block";
-        document.getElementById("down1").style.display="block";
+        document.getElementById("rightbox").style.display="none";
+
+        document.getElementById("down1").style.display="none";
         document.getElementById("down2").style.display = "none";
         var ssnn=warnsn;
         document.getElementById("conSN").innerHTML=ssnn

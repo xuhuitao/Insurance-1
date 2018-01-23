@@ -263,7 +263,7 @@
             '<span>',
             inner2,
             '</span>',
-            '<img  src='+car3+' width="25px" height="22px" style="margin-bottom: 2px;margin-left: 10px"/>',
+//            '<img  src='+car3+' width="25px" height="22px" style="margin-bottom: 2px;margin-left: 10px"/>',
             '</div>'
 
         ].join('');
@@ -281,14 +281,14 @@
     var operateEvents = {
         'click .SSN': function (e, value, row, index) {
 
-            parent.rightFrame.location.href="righttable.html";
+
 
             sessionStorage.xuanzhe=row.ccuSn;
             console.log(sessionStorage.xuanzhe)
             $table.bootstrapTable("refresh",{silent: true});
 
             window.parent.warnsn = row.ccuSn;
-            window.parent.changesn();
+            window.parent.changesn1();
 
             window.parent.lon1 = row.lon;
             window.parent.lat1 = row.lat;
