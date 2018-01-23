@@ -233,6 +233,12 @@
 
 
 
+        if(row.ccuSn==sessionStorage.xuanzhe){
+            car3="img/tasks.png";
+
+        }else {
+            car3="img/111.png"
+        }
         var inner=row.ccuSn;
         var inner2=row.applicant+"|"+row.createTime+"&nbsp;激活";
 
@@ -257,6 +263,7 @@
             '<span>',
             inner2,
             '</span>',
+            '<img  src='+car3+' width="25px" height="22px" style="margin-bottom: 2px;margin-left: 10px"/>',
             '</div>'
 
         ].join('');
@@ -276,7 +283,9 @@
 
             parent.rightFrame.location.href="righttable.html";
 
-
+            sessionStorage.xuanzhe=row.ccuSn;
+            console.log(sessionStorage.xuanzhe)
+            $table.bootstrapTable("refresh",{silent: true});
 
             window.parent.warnsn = row.ccuSn;
             window.parent.changesn();

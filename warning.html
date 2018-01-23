@@ -41,9 +41,7 @@
     <![endif]-->
     <title>warning</title>
     <style>
-        .cont::-webkit-scrollbar {
-            display: none;
-        }
+
         hr{
            margin-top: 5px;
            width: 98%;
@@ -53,9 +51,9 @@
     </style>
 </head>
 <body>
-<div class="cont" style="height: 99.9vh;overflow-y: scroll;width: 96%;">
+<div class="cont" style="height: 99.9vh;overflow-y: scroll;overflow-x: hidden; width: 100%;">
 
-<p id="pId" style="height:100%;margin-top: 20px;margin-left:8px;text-align: left;font-size: 1.1em;white-space: nowrap;line-height:20px"></p>
+<p id="pId" style="height:100%;margin-top: 20px;margin-left:5px;text-align: left;font-size: 1.1em;white-space: nowrap;line-height:20px"></p>
 </div>
 
 </body>
@@ -80,28 +78,32 @@
                 for(var i=0;i<res.data.list.length;i++) {
                     var s = res.data.list[i].alarmTime;
                     var ai = res.data.list[i];
-                                        var alaremst;
+                    var alaremst;
 
                     if(res.data.list[i].alarmType==0){
                         alaremst="故障告警";
+                        car="img/Group 87.png"
                     }
-                    if(res.data.list[i].alarmType==1){
-                        alaremst="震动告警";
-                    }
-                    if(res.data.list[i].alarmType==2){
-                        alaremst="内置电池低告警";
-                    }
-                    if(res.data.list[i].alarmType==4){
+                    else if(res.data.list[i].alarmType==4){
                         alaremst="断电告警";
+                        car="img/Group 59.png"
                     }
-                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;";
-                    nn=res.data.list[i].alarmTime+"&nbsp;&nbsp;"+"发生"+alaremst;
-                    oo=res.data.list[i].alarmTime.substring(11, 16);
+                    else if(res.data.list[i].alarmType==2){
+                        alaremst="内置电池低告警";
+                        car="img/Group 17.png"
+                    }
+                    else{
+                        alaremst="震动告警";
+                        car="img/Group 17.png"
+                    }
+                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"发生"+alaremst;
+
+                    oo=res.data.list[i].alarmTime.substring(11, 19);
                     if (!map[s.substring(0, 10)]) {
                         $("p").append(s.substring(0, 10)+'<hr>');
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
 
                         dest.push({
@@ -117,9 +119,9 @@
                     }
                     else{
 
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+
                         $("p").append("<br/>");
                     }
 
@@ -141,6 +143,7 @@
     };
 
     function publicBusi(){
+
         $.ajax({
             url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",
@@ -151,7 +154,7 @@
                 xhr.setRequestHeader("Authorization",sessionStorage.token);
             },
             success: function (res) {
-
+                $('#pId').html('')
                 var map = {},
                     dest = [];
                 for(var i=0;i<res.data.list.length;i++) {
@@ -161,24 +164,28 @@
 
                     if(res.data.list[i].alarmType==0){
                         alaremst="故障告警";
+                        car="img/Group 87.png"
                     }
-                    if(res.data.list[i].alarmType==1){
-                        alaremst="震动告警";
-                    }
-                    if(res.data.list[i].alarmType==2){
-                        alaremst="内置电池低告警";
-                    }
-                    if(res.data.list[i].alarmType==4){
+                    else if(res.data.list[i].alarmType==4){
                         alaremst="断电告警";
+                        car="img/Group 59.png"
                     }
-                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"&nbsp;&nbsp;于&nbsp;&nbsp;";
-                    nn=res.data.list[i].alarmTime+"&nbsp;&nbsp;"+"发生"+alaremst;
-                    oo=res.data.list[i].alarmTime.substring(11, 16);
+                    else if(res.data.list[i].alarmType==2){
+                        alaremst="内置电池低告警";
+                        car="img/Group 17.png"
+                    }
+                    else{
+                        alaremst="震动告警";
+                        car="img/Group 17.png"
+                    }
+                    mm="<a style='text-decoration: none;cursor:pointer;' id='"+res.data.list[i].ccuSn+"' onclick='showMessage(this)'>"+res.data.list[i].applicant+"&nbsp;(&nbsp;"+res.data.list[i].phoneNumber+"&nbsp;)"+"</a>"+"发生"+alaremst;
+
+                    oo=res.data.list[i].alarmTime.substring(11, 19);
                     if (!map[s.substring(0, 10)]) {
                         $("p").append(s.substring(0, 10)+'<hr>');
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
 
                         dest.push({
@@ -194,9 +201,9 @@
                     }
                     else{
 
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+
                         $("p").append("<br/>");
                     }
 
@@ -219,6 +226,7 @@
         var id = index_str.substring(index_str.lastIndexOf("-")+1,index_str.length);
 
         window.parent.warnsn = id;
+
         window.parent.changesn();
         $.ajax({
             url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
