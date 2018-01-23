@@ -53,9 +53,9 @@
     </style>
 </head>
 <body>
-<div class="cont" style="height: 99.9vh;overflow-y: scroll;width: 96%;margin-left: 2%">
+<div class="cont" style="height: 99.9vh;overflow-y: scroll;width: 96%;">
 
-<p id="pId" style="height:100%;margin-top: 20px;margin-left:10px;text-align: left;font-size: 1.1em;white-space: nowrap;line-height:20px"></p>
+<p id="pId" style="height:100%;margin-top: 20px;margin-left:8px;text-align: left;font-size: 1.1em;white-space: nowrap;line-height:20px"></p>
 </div>
 
 </body>
@@ -71,7 +71,7 @@
             cache: false,
             beforeSend: function (xhr) {
                 /* Authorization header */
-                xhr.setRequestHeader("Authorization","eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4sQVVUSF9XUklURSIsInN1YiI6ImhlbGxvIiwiZXhwIjoxNTE2Njg2MTEzfQ.BwBObn8EPQrSnEcM9qtoF68iu4cRubtHulAXLfb6XMLUR-xXj5D2UMBCwrkVJS2Jl0D2sixAG7PY-JbkEI_ayQ");
+                xhr.setRequestHeader("Authorization",sessionStorage.token);
             },
             success: function (res) {
 
@@ -99,9 +99,9 @@
                     oo=res.data.list[i].alarmTime.substring(11, 16);
                     if (!map[s.substring(0, 10)]) {
                         $("p").append(s.substring(0, 10)+'<hr>');
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
 
                         dest.push({
@@ -111,15 +111,15 @@
                         });
 
                         map[s.substring(0, 10)] = ai;
-                        console.log(dest)
+
 
 
                     }
                     else{
 
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
                     }
 
@@ -148,7 +148,7 @@
             cache: false,
             beforeSend: function (xhr) {
                 /* Authorization header */
-                xhr.setRequestHeader("Authorization","eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6IlJPTEVfQURNSU4sQVVUSF9XUklURSIsInN1YiI6ImhlbGxvIiwiZXhwIjoxNTE2Njg2MTEzfQ.BwBObn8EPQrSnEcM9qtoF68iu4cRubtHulAXLfb6XMLUR-xXj5D2UMBCwrkVJS2Jl0D2sixAG7PY-JbkEI_ayQ");
+                xhr.setRequestHeader("Authorization",sessionStorage.token);
             },
             success: function (res) {
 
@@ -176,9 +176,9 @@
                     oo=res.data.list[i].alarmTime.substring(11, 16);
                     if (!map[s.substring(0, 10)]) {
                         $("p").append(s.substring(0, 10)+'<hr>');
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
 
                         dest.push({
@@ -188,15 +188,15 @@
                         });
 
                         map[s.substring(0, 10)] = ai;
-                        console.log(dest)
+
 
 
                     }
                     else{
 
-                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;"+mm+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
-                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
+                        $("p").append("&nbsp;"+"<img  src='img/Group%2017.png' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+nn+"<br/>");
+                        $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
                         $("p").append("<br/>");
                     }
 

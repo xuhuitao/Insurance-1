@@ -51,11 +51,11 @@
 </head>
 <body>
 <nav>
-    <div class="container-fluid" style="margin-top: 10px;padding-left: 0;padding-right: 0;">
+    <div  style="margin-top: 10px;padding-left: 0;padding-right: 0;">
         <ul class="nav nav-tabs">
-            <li><a href="list1.html" target="myFrame">待审核</a></li>
-            <li ><a href="list2.html" target="myFrame">已审核/保障中</a></li>
-            <li id="tabOption"><a href="list3.html" target="myFrame">已拒绝</a></li>
+            <li ><a href="list1.html" target="myFrame">待审核</a></li>
+            <li><a href="list2.html" target="myFrame">已审核/保障中</a></li>
+            <li class="active"  id="tabOption"><a href="list3.html" target="myFrame">已拒绝</a></li>
             <li><a href="list4.html" target="myFrame">已过期</a></li>
         </ul>
     </div>
@@ -237,7 +237,7 @@
     var operateEvents = {
         'click .newpage': function (e, value, row, index) {
             parent.document.getElementById("myFrame").src="check.html";
-            sessionStorage.dingdan="已拒绝 /";
+            sessionStorage.dingdan="已拒绝 / ";
             sessionStorage.name2=row.applicant;
             sessionStorage.idcard2=row.idNumber;
             sessionStorage.phone2=row.phoneNumber;
@@ -321,6 +321,5 @@
             }
         })
     };
-    document.getElementById("tabOption").getElementsByTagName("a")[0].style.backgroundColor="#1684c2";
-    document.getElementById("tabOption").getElementsByTagName("a")[0].style.color="white"
+    document.getElementById("tabOption").getElementsByTagName("a")[0].style.color="#1684c2"
 </script>
