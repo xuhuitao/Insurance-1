@@ -179,7 +179,7 @@
 //        document.getElementById("Report").innerHTML=sessionStorage.Report;
 //        document.getElementById("duedate").innerHTML=sessionStorage.duedate;
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+sessionStorage.xulie2,
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike/detail?ccuSn="+sessionStorage.xulie2,
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
