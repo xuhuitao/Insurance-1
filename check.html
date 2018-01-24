@@ -84,7 +84,7 @@
 
 
 <div class="top" style="width: 100%;height:40px;">
-    <span class="glyphicon glyphicon-arrow-left" style="float: left;margin-left:30px; color: #1d98dc;padding-top: 10px" onclick="dd()">返回</span>
+    <span class="glyphicon glyphicon-arrow-left" style="float: left;margin-left:30px; color: #1d98dc;padding-top: 10px;cursor:pointer;" onclick="dd()">返回</span>
 
 </div>
 <div style="height: 80vh;overflow-y: scroll;">
@@ -109,11 +109,11 @@
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">车辆型号<span  id="carxinghao">米酷max</span></p>
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">车架号<span  id="chejia">0000000000</span></p>
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">购车金额<span  id="money">5000</span></p>
-        <p style="margin-top: 50px;color: rgba(0,0,0,0.51);height: 40px;">购车发票<img  id="invoice" src="#" style="float: right;width: 60px;height: 40px;" onclick="jj()"></img></p>
+        <p style="margin-top: 50px;color: rgba(0,0,0,0.51);height: 40px;">购车发票<img  id="invoice"  style="float: right;width: 60px;height: 40px;" onclick="jj()"></img></p>
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">购车日期<span  id="buydate">2018.1.9</span></p>
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51);height: 40px;">车辆图片
-            <img  id="carpic2" src="#" style="float: right;width: 60px;height: 40px;" onclick="ee()"></img>
-            <img  id="carpic1"  src="#" style="float: right;width: 60px;height: 40px;margin-right: 10px;" onclick="hh()"></img></p>
+            <img  id="carpic2"  style="float: right;width: 60px;height: 40px;" onclick="ee()"></img>
+            <img  id="carpic1"   style="float: right;width: 60px;height: 40px;margin-right: 10px;" onclick="hh()"></img></p>
         <p style="margin-top: 50px;color: rgba(0,0,0,0.51)">绑定设备<span id="carsn" style="color: #0c86e0;cursor:pointer;" onclick="tt();">B000000000</span></p>
         <!--<button type="button" class="button button-glow button-rounded button-highlight" style="margin-top: 50px;margin-left:10%;">通过</button>-->
         <!--<button type="button" style="margin-left: 40px;" class="button button-glow button-rounded button-caution">拒绝</button>-->
@@ -140,13 +140,11 @@
 
 <script type="text/javascript">
     window.onload = function(){
-        console.log(sessionStorage.name2);
+
         if(sessionStorage.dingdan=="待审核 / "){
             document.getElementById("anniu").style.display="block"
         }
-        document.getElementById("dingdan").innerHTML=sessionStorage.dingdan;
 
-        document.getElementById("people1").innerHTML=sessionStorage.name2;
         document.getElementById("people2").innerHTML=sessionStorage.name2;
         document.getElementById("idnum").innerHTML=sessionStorage.idcard2;
         document.getElementById("phone").innerHTML=sessionStorage.phone2;
@@ -156,6 +154,7 @@
         document.getElementById("chejia").innerHTML=sessionStorage.chejia2;
         document.getElementById("money").innerHTML=sessionStorage.jine2;
         document.getElementById("invoice").src=sessionStorage.fapiao2;
+        console.log(document.getElementById("invoice").src);
 
 
 

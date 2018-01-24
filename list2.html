@@ -237,6 +237,7 @@
             parent.document.getElementById("myFrame").src="check.html";
             sessionStorage.dingdan="已审核 / ";
             sessionStorage.name2=row.applicant;
+            console.log(sessionStorage.name2)
             sessionStorage.idcard2=row.idNumber;
             sessionStorage.phone2=row.phoneNumber;
             if(row.city==null||row.city=="null"){
