@@ -100,7 +100,7 @@
 
                     oo=res.data.list[i].alarmTime.substring(11, 19);
                     if (!map[s.substring(0, 10)]) {
-                        $("p").append(s.substring(0, 10)+'<hr>');
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+s.substring(0, 10)+'<hr>');
                         $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
 
                         $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
@@ -182,7 +182,7 @@
 
                     oo=res.data.list[i].alarmTime.substring(11, 19);
                     if (!map[s.substring(0, 10)]) {
-                        $("p").append(s.substring(0, 10)+'<hr>');
+                        $("p").append("&nbsp;&nbsp;&nbsp;"+s.substring(0, 10)+'<hr>');
                         $("p").append("&nbsp;&nbsp;&nbsp;"+"<img  src='"+car+"' width='25px' height='25px'>"+"&nbsp;&nbsp;"+mm+"<br/>");
 
                         $("p").append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+oo+"<br/>");
@@ -226,58 +226,14 @@
         var id = index_str.substring(index_str.lastIndexOf("-")+1,index_str.length);
 
         window.parent.warnsn = id;
+        sessionStorage.id=id;
 
-        window.parent.changesn();
+//        window.parent.changesn();
         window.parent.changesn2();
-//        parent.document.getElementById("rightbox").style.display="none";
-        parent.rightFrame.location.href="righttable.html";
-
-        $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
-            method: "get",
-            contentType: "application/json; charset=utf-8",
-            cache: false,
-//            beforeSend: function (xhr) {
-//                /* Authorization header */
-//                xhr.setRequestHeader("Authorization", sessionStorage.token);
-//            },
-
-            success: function (res) {
-
-                console.log(res);
-                sessionStorage.Sn=res.data.list[0].ccuSn;
+//        parent.document.getElementById("rightbox2").style.display="block";
+        parent.rightFrame2.location.href="righttable.html";
 
 
-                console.log(sessionStorage.Sn);
-
-
-                sessionStorage.riqi1=res.data.list[0].buyTime;
-                sessionStorage.pinpai=res.data.list[0].brand;
-                sessionStorage.xinghao=res.data.list[0].model;
-                sessionStorage.chejia=res.data.list[0].vin;
-                sessionStorage.jinee=res.data.list[0].buyPrice;
-                sessionStorage.invoice=res.data.list[0].billImg;
-                if(res.data.list[0].city==null||res.data.list[0].city=="null"){
-                    var ssq2=res.data.list[0].province
-                }
-                else if(res.data.list[0].district==null||res.data.list[0].district=="null"){
-                    var ssq2=res.data.list[0].province+res.data.list[0].city
-                }else {
-                    var ssq2=res.data.list[0].province+res.data.list[0].city+res.data.list[0].district
-                }
-                sessionStorage.shengshi=ssq2;
-                sessionStorage.carpic2=res.data.list[0].scooterImg[1];
-                sessionStorage.carpic1=res.data.list[0].scooterImg[0];
-                sessionStorage.xingming=res.data.list[0].applicant;
-                sessionStorage.shenfen=res.data.list[0].idNumber;
-                sessionStorage.shouji=res.data.list[0].phoneNumber;
-
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log("失败")
-                console.log(jqXHR);
-            }
-        });
         $.ajax({
             url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+id,
             method: "get",
@@ -290,6 +246,7 @@
 
             success: function (res) {
                 console.log(res);
+                console.log("成功2")
 
                 sessionStorage.daoqi=res.data.list[0].simValidityTime;
                 window.parent.lon1 = res.data.list[0].lon;
@@ -337,7 +294,54 @@
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log("失败");
+                console.log("失败2");
+                console.log(jqXHR);
+            }
+        });
+        $.ajax({
+            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
+            method: "get",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+//            beforeSend: function (xhr) {
+//                /* Authorization header */
+//                xhr.setRequestHeader("Authorization", sessionStorage.token);
+//            },
+
+            success: function (res) {
+                console.log("成功1")
+
+                console.log(res);
+                sessionStorage.Sn=res.data.list[0].ccuSn;
+
+
+                console.log(sessionStorage.Sn);
+
+
+                sessionStorage.riqi1=res.data.list[0].buyTime;
+                sessionStorage.pinpai=res.data.list[0].brand;
+                sessionStorage.xinghao=res.data.list[0].model;
+                sessionStorage.chejia=res.data.list[0].vin;
+                sessionStorage.jinee=res.data.list[0].buyPrice;
+                sessionStorage.invoice=res.data.list[0].billImg;
+                if(res.data.list[0].city==null||res.data.list[0].city=="null"){
+                    var ssq2=res.data.list[0].province
+                }
+                else if(res.data.list[0].district==null||res.data.list[0].district=="null"){
+                    var ssq2=res.data.list[0].province+res.data.list[0].city
+                }else {
+                    var ssq2=res.data.list[0].province+res.data.list[0].city+res.data.list[0].district
+                }
+                sessionStorage.shengshi=ssq2;
+                sessionStorage.carpic2=res.data.list[0].scooterImg[1];
+                sessionStorage.carpic1=res.data.list[0].scooterImg[0];
+                sessionStorage.xingming=res.data.list[0].applicant;
+                sessionStorage.shenfen=res.data.list[0].idNumber;
+                sessionStorage.shouji=res.data.list[0].phoneNumber;
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("失败1")
                 console.log(jqXHR);
             }
         });

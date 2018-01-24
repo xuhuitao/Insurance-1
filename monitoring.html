@@ -164,6 +164,13 @@
         <iframe id="rightFrame" name="rightFrame" src="warning.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
     </div>
    </div>
+<div id="rightbox2" style="display: none;">
+
+    <div  style="position:fixed;background-color: #fff;border-radius: 3px;
+      width:300px; height:78%;right:40px;margin-top: 160px;box-shadow:0 4px 5px rgba(0,0,0,0.32);pointer-events:auto;min-width: 320px;z-index: 9;">
+        <iframe id="rightFrame2" name="rightFrame2" src="righttable.html" style="overflow-y: scroll;overflow-x: hidden; height: 100%;" frameborder="no" width="100%"></iframe>
+    </div>
+</div>
 </body>
 <script type="text/javascript" >
 //    var mapData=(function () {
@@ -289,6 +296,7 @@
         function show2(num2,a)
         {
             document.getElementById("rightFrame").src="righttable.html";
+            var box1 = document.getElementById("rightbox2");
 
             var box2 = document.getElementById(num2);
             var jiantou2 = document.getElementById("down2");
@@ -309,6 +317,7 @@
             }
             else
             {
+                box1.style.display = "none";
                 box2.style.display = "none";
                 jiantou1.style.display = "none";
 
@@ -318,7 +327,9 @@
             }
         }
         function ee(num3,a) {
-            document.getElementById("rightFrame").src="warning.html"
+            document.getElementById("rightFrame").src="warning.html";
+
+            document.getElementById("rightbox2").style.display="none";
             var box2 = document.getElementById(num3);
             var jiantou2 = document.getElementById("down2");
             var jiantou1 = document.getElementById("down1");
@@ -383,7 +394,7 @@
     }
 function changesn1() {
 //        parent.rightFrame.location.reload;
-//        document.getElementById('rightFrame').src="righttable.html";
+
     document.getElementById("rightcon").style.display="block";
     document.getElementById("rightbox").style.display="none";
 
@@ -394,7 +405,23 @@ function changesn1() {
 
 }
 function changesn2() {
+    var ssnn=warnsn;
+    document.getElementById("conSN").innerHTML=ssnn;
+    document.getElementById("rightcon").style.display="block";
+    document.getElementById("rightbox2").style.display="block";
+    document.getElementById("down1").style.display="block";
+    document.getElementById("down2").style.display = "none";
+
+
+}
+function changesn3() {
+        document.getElementById('rightFrame').src="righttable.html";
     document.getElementById("rightbox").style.display="block";
+    document.getElementById("rightcon").style.display="block";
+    var ssnn=warnsn;
+    document.getElementById("conSN").innerHTML=ssnn;
+    document.getElementById("down1").style.display="block";
+    document.getElementById("down2").style.display = "none";
 
 }
     function changesn() {
