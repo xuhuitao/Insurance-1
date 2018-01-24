@@ -187,6 +187,7 @@
         }
         console.log(res);
     }
+
     function idFormatter(value,row,index) {
 //        var car =row.online==true?"img/alarm_msg.png":row.online==false?"img/alarm_msg.png"
 
@@ -234,7 +235,7 @@
 
 
         if(row.ccuSn==sessionStorage.xuanzhe){
-            car3="img/tasks.png";
+            car3="img/ic_selected.png";
 
         }else {
             car3="img/111.png"
@@ -245,7 +246,7 @@
 
         return [
 
-            '<div style="margin-left: 15px;line-height: 24px;">',
+            '<div style="margin-left: 15px;line-height: 24px;width: 80%;float: left">',
             '<div style="width:120px;float: left">',
 
             '<a  class="SSN" style="text-decoration: none;cursor:pointer;">'+inner+'</a>'+'&nbsp;&nbsp;',
@@ -263,8 +264,12 @@
             '<span>',
             inner2,
             '</span>',
-//            '<img  src='+car3+' width="25px" height="22px" style="margin-bottom: 2px;margin-left: 10px"/>',
+
+            '</div>',
+            '<div style="float: right">',
+            '<img  src='+car3+' width="30px" height="30px" style="margin-top: 10px;margin-left: 2px;"/>',
             '</div>'
+
 
         ].join('');
 
