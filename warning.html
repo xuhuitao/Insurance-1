@@ -60,10 +60,8 @@
 <script type="text/javascript">
     window.onload = function(){
 
-
-
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -145,7 +143,7 @@
     function publicBusi(){
 
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -228,14 +226,8 @@
         window.parent.warnsn = id;
         sessionStorage.id=id;
 
-//        window.parent.changesn();
-        window.parent.changesn2();
-//        parent.document.getElementById("rightbox2").style.display="block";
-        parent.rightFrame2.location.href="righttable.html";
-
-
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+id,
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+id,
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -246,7 +238,6 @@
 
             success: function (res) {
                 console.log(res);
-                console.log("成功2")
 
                 sessionStorage.daoqi=res.data.list[0].simValidityTime;
                 window.parent.lon1 = res.data.list[0].lon;
@@ -299,7 +290,7 @@
             }
         });
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+id,
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -309,15 +300,9 @@
 //            },
 
             success: function (res) {
-                console.log("成功1")
 
                 console.log(res);
                 sessionStorage.Sn=res.data.list[0].ccuSn;
-
-
-                console.log(sessionStorage.Sn);
-
-
                 sessionStorage.riqi1=res.data.list[0].buyTime;
                 sessionStorage.pinpai=res.data.list[0].brand;
                 sessionStorage.xinghao=res.data.list[0].model;
@@ -345,6 +330,9 @@
                 console.log(jqXHR);
             }
         });
+
+        window.parent.changesn2();
+        parent.rightFrame2.location.href="righttable.html";
 
 
     }

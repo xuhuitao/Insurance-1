@@ -124,7 +124,7 @@
 </body>
 <script type="text/javascript">
     var $table = $('#table');
-    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/ebike?sidx=id&order=desc";
+    var  url ="http://cjl3.rokyinfo.net:7110/v1.0/ebike?sidx=id&order=desc";
     function initTable() {
 //        $table.bootstrapTable("destroy");
         $table.bootstrapTable({
@@ -340,7 +340,7 @@
             sessionStorage.zhuangtai=q;
 
             $.ajax({
-                url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+row.ccuSn,
+                url: "http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+row.ccuSn,
                 method: "get",
                 contentType: "application/json; charset=utf-8",
                 cache: false,
@@ -383,7 +383,7 @@
                 }
             });
             $.ajax({
-                url: "http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+row.ccuSn,
+                url: "http://cjl3.rokyinfo.net:7110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+row.ccuSn,
                 method: "get",
                 contentType: "application/json; charset=utf-8",
                 cache: false,
@@ -415,7 +415,7 @@
 
     $(".search").on("click",function () {
 
-            var url="http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()
+            var url="http://cjl3.rokyinfo.net:7110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()
 
         $.ajax({
             url: url,
@@ -428,7 +428,7 @@
                 xhr.setRequestHeader("Authorization", sessionStorage.token);
             },
             success: function (res) {
-                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:8110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()});
+                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:7110/v1.0/ebike?page=1&limit=20&sidx=id&order=desc&ccuSn="+$(".searchResult").val()});
 
                 window.parent.lon1 = res.data.list[0].lon;
                 window.parent.lat1 = res.data.list[0].lat;

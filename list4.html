@@ -74,7 +74,7 @@
 </div>
 <div class="fixed-table-toolbar" style="white-space: nowrap;margin-top: 10px;"><div class="columns columns-right btn-group pull-right">
     <button class="btn btn-default "  style="color: #fff;background-color: rgb(22, 132, 194);">
-        <a id="daochu" style="color: white"><span class="glyphicon glyphicon-download-alt"  style="bottom: 1px;">&nbsp;导出</span></a>
+        <a id="daochu" style="color: white" target="_blank"><span class="glyphicon glyphicon-download-alt"  style="bottom: 1px;">&nbsp;导出</span></a>
     </button></div></div>
 
 <table id="table"
@@ -95,7 +95,7 @@
 </body>
 <script type="text/javascript">
     var $table = $('#table');
-    var  url ="http://cjl3.rokyinfo.net:8110/v1.0/orders?sidx=id&order=desc&belong=1&status=3";
+    var  url ="http://cjl3.rokyinfo.net:7110/v1.0/orders?sidx=id&order=desc&belong=1&status=3";
     function initTable() {
         $table.bootstrapTable("destroy");
         $table.bootstrapTable({
@@ -272,9 +272,9 @@
 
 
     $(".search").on("click",function () {
-        console.log("http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val());
+        console.log("http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val());
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val(),
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val(),
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
@@ -283,7 +283,7 @@
                 xhr.setRequestHeader("Authorization", sessionStorage.token);
             },
             success: function (data) {
-                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:8110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val()});
+                $("#table").bootstrapTable('refresh',{'url':"http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&status=3&applicant="+$(".searchResult").val()});
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("失败");
@@ -301,7 +301,7 @@
 <script type="text/javascript">
     window.onload = function() {
         $.ajax({
-            url: "http://cjl3.rokyinfo.net:8110/v1.0/orders/excel",
+            url: "http://cjl3.rokyinfo.net:7110/v1.0/orders/excel",
             method: "get",
             contentType: "application/json; charset=utf-8",
             cache: false,
