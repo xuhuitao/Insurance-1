@@ -85,9 +85,11 @@
                 dataType: "json",
 
                 success:function(json){
-                    sessionStorage.token=json.token;
-                    window.location.href="monitoring.html";
-                    top.window.location="monitoring.html";
+
+                    console.log(json.token);
+                    window.location.href="monitoring.html?token="+json.token;
+                    top.window.location="monitoring.html?token="+json.token;
+
 
 
                 },

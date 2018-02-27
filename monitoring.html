@@ -440,6 +440,10 @@ function changesn3() {
     }
     window.onload = function(e, value, row, index){
 
+        var urltoken=window.location.search;
+        var token1;
+        token1=urltoken.substring(7);
+        sessionStorage.token=token1;
         $.ajax({
             url: "http://cjl3.rokyinfo.net:7110/v1.0/users/detail",
             method: "get",
@@ -460,6 +464,7 @@ function changesn3() {
             },
             error:function (err) {
                 console.log(err)
+
             }})
     }
 
