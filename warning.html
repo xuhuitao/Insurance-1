@@ -60,6 +60,12 @@
 <script type="text/javascript">
     window.onload = function(){
 
+        var urltoken=parent.location.search;
+        var token1;
+        token1=urltoken.substring(7);
+        if(token1!="") {
+            sessionStorage.token = token1;
+        }
         $.ajax({
             url: "http://cjl3.rokyinfo.net:7110/v1.0/alarmmessage?page=1&limit=100&sidx=id&order=desc",
             method: "get",

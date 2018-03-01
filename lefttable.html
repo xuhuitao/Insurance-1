@@ -123,8 +123,16 @@
 </table>
 </body>
 <script type="text/javascript">
+
     var $table = $('#table');
     var  url ="http://cjl3.rokyinfo.net:7110/v1.0/ebike?sidx=id&order=desc";
+    var urltoken = parent.location.search;
+    var token1;
+    token1 = urltoken.substring(7);
+      if (token1 != "") {
+            sessionStorage.token = token1;
+      }
+
     function initTable() {
 //        $table.bootstrapTable("destroy");
         $table.bootstrapTable({
