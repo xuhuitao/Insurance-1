@@ -183,6 +183,8 @@
     function responseHandler(res) {
         dataResult = res;
         if (res) {
+
+            window.parent.fillBike(res.data.list);
             return {
                 "rows": res.data.list,
                 "total": res.data.totalCount

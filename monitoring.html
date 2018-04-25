@@ -352,9 +352,201 @@
         }
     document.getElementById("tabActive").getElementsByTagName("a")[0].style.color="white";
 
+    function fillBike2(bikeList) {
+
+        map.centerAndZoom(ggPoint, 17);
+        map.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
+
+        var myIcon = new BMap.Icon("img/Group 522.png", new BMap.Size(40,87));
+
+
+        var total = 0; //总记录数
+        var groupCount = 0; //每次转十条
+        if (bikeList.length % 10 > 0) {
+            groupCount = (bikeList.length / 10) + 1;
+        } else {
+            groupCount = (bikeList.length / 10);
+        }
+
+        for(var i = 0; i < groupCount; i++) {
+
+            var pointArr = [];
+
+            for (var j = 0; j < 10; j++) {
+
+                if(total < bikeList.length) {
+                    var ggPoint = new BMap.Point(bikeList[i * 10 + j].lon, bikeList[i * 10 + j].lat);
+                    pointArr.push(ggPoint);
+                }
+                total++;
+            }
+
+            var convertor = new BMap.Convertor();
+            convertor.translate(pointArr, 1, 5, function (data) {
+
+                if(data.status === 0) {
+
+                    for (var i = 0; i < data.points.length; i++) {
+
+                        var marker = new BMap.Marker(data.points[i], {icon:myIcon});
+
+                        map.addOverlay(marker);
+
+                        marker.addEventListener("click", function () {
+//                            alert("111222");
+                        });
+                    }
+
+                    map.setCenter(data.points[0]);
+                }
+            });
+        }
+    }
+
+    function fillBike(bikeList) {
+
+        var rawLength = bikeList.length;
+        var translatedElements = [];
+        var translatedPoints = [];
+
+//        map.centerAndZoom(ggPoint, 17);
+        map.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
+
+        var myIcon = new BMap.Icon("img/Group 522.png", new BMap.Size(40,87));
+
+        for (var i = 0; i < bikeList.length; i++) {
+
+            translateOne(i, bikeList[i]);
+
+
+//            // 定时执行，防止超出百度地图坐标转换每秒并发次数限制
+//            setTimeout(function(index) {
+//                return function() {
+//                  translateOne(index, bikeList[index]);
+//                }
+//            }(i), i * 10);
+        }
+
+        function translateOne(index, gps) {
+
+            var convertor = new BMap.Convertor();
+
+            var point = new BMap.Point(gps.lon, gps.lat);
+            var pointArr = [];
+            pointArr.push(point);
+            convertor.translate(pointArr, 1, 5, function (returnedData) {
+
+                if(returnedData.status === 0) {
+
+                    translatedElements.push({
+                        index: index,
+                        point: returnedData.points[0]
+                    });
+
+                    var marker = new BMap.Marker(returnedData.points[0], {icon:myIcon});
+                    map.addOverlay(marker);
+                    map.setCenter(returnedData.points[i]);
+
+                    marker.addEventListener("click", function () {
+                        warnsn = bikeList[index].ccuSn;
+                        changesn3();
+
+
+                        lon1 = bikeList[index].lon;
+                        lat1 = bikeList[index].lat;
+                        pointjump();
+
+                        sessionStorage.jingdu = bikeList[index].lon;
+                        sessionStorage.weidu = bikeList[index].lat;
+                        sessionStorage.shangbao = bikeList[index].reportTime;
+                        sessionStorage.chezai = bikeList[index].bmsSoh-100;
+
+                        sessionStorage.neizhi = bikeList[index].dcuVbat;
+                        sessionStorage.jizhan = bikeList[index].dcuGsmRssi;
+                        sessionStorage.weixing = robikeList[index].dcuGpsRssi;
+                        sessionStorage.weizhi = robikeList[index].lon+row.lat;
+                        var q;
+                        if(bikeList[index].status==0){
+                            q="设防"
+                        }
+                        else if(bikeList[index].status==1){
+                            q="撤防"
+                        }
+                        else if(bikeList[index].status==2){
+                            q="P档"
+                        }
+                        else if(bikeList[index].status==3){
+                            q="骑行"
+                        }
+                        else {
+                            q="状态不明"
+                        }
+                        sessionStorage.zhuangtai=q;
+
+                        $.ajax({
+                            url: "http://cjl3.rokyinfo.net:7110/v1.0/orders?page=1&limit=20&sidx=id&order=desc&belong=1&ccuSn="+bikeList[index].ccuSn,
+                            method: "get",
+                            contentType: "application/json; charset=utf-8",
+                            cache: false,
+                            beforeSend: function (xhr) {
+                                /* Authorization header */
+                                xhr.setRequestHeader("Authorization", sessionStorage.token);
+                            },
+
+                            success: function (res) {
+
+                                alert(res);
+
+                                sessionStorage.Sn=res.data.list[0].ccuSn;
+
+                                sessionStorage.riqi1=res.data.list[0].buyTime;
+                                sessionStorage.pinpai=res.data.list[0].brand;
+                                sessionStorage.xinghao=res.data.list[0].model;
+                                sessionStorage.chejia=res.data.list[0].vin;
+                                sessionStorage.jinee=res.data.list[0].buyPrice;
+                                sessionStorage.invoice=res.data.list[0].billImg;
+                                if(res.data.list[0].city==null||res.data.list[0].city=="null"){
+                                    var ssq2=res.data.list[0].province
+                                }
+                                else if(res.data.list[0].district==null||res.data.list[0].district=="null"){
+                                    var ssq2=res.data.list[0].province+res.data.list[0].city
+                                }else {
+                                    var ssq2=res.data.list[0].province+res.data.list[0].city+res.data.list[0].district
+                                }
+                                sessionStorage.shengshi=ssq2;
+                                sessionStorage.carpic2=res.data.list[0].scooterImg[1];
+                                sessionStorage.carpic1=res.data.list[0].scooterImg[0];
+                                sessionStorage.xingming=res.data.list[0].applicant;
+                                sessionStorage.shenfen=res.data.list[0].idNumber;
+                                sessionStorage.shouji=res.data.list[0].phoneNumber;
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("失败")
+                                console.log(jqXHR);
+                            }
+                        });
+                    });
+
+                    // 全部转换完成
+                    if (translatedElements.length == rawLength) {
+                        translatedElements.sort(function(a, b) {
+                            return a.index - b.index;
+                        });
+                        for (var i = 0; i < translatedElements.length; i++) {
+                            translatedPoints.push(translatedElements[i].point);
+                        }
+                    }
+
+                }
+            });
+        }
+    }
+
+
+
 
     function pointjump() {
-
 
         map.clearOverlays();
         var x = lon1;
@@ -415,7 +607,8 @@ function changesn2() {
 
 }
 function changesn3() {
-        document.getElementById('rightFrame').src="righttable.html";
+
+    document.getElementById('rightFrame').src="righttable.html";
     document.getElementById("rightbox2").style.display="none";
     document.getElementById("rightbox").style.display="block";
     document.getElementById("rightcon").style.display="block";
